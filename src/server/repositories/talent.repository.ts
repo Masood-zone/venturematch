@@ -35,6 +35,19 @@ export const talentRepository = {
     });
   },
 
+  async findActiveAcademicProgramme(academicUnit: string, name: string) {
+    return db.academicProgramme.findFirst({
+      where: { academicUnit, name, campus: "KUMASI", active: true },
+    });
+  },
+
+  async listAcademicProgrammes() {
+    return db.academicProgramme.findMany({
+      where: { campus: "KUMASI", active: true },
+      orderBy: [{ academicUnit: "asc" }, { sortOrder: "asc" }, { name: "asc" }],
+    });
+  },
+
   async updateStudentProfile(userId: string, data: Partial<{
     bio: string;
     level: string;

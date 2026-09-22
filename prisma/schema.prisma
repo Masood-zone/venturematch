@@ -281,6 +281,28 @@ model AcademicProfile {
   @@map("academic_profile")
 }
 
+model AcademicProgramme {
+  id                  String   @id @default(cuid())
+  name                String
+  academicUnit        String
+  academicUnitType    String
+  campus              String
+  studyLevel          String
+  awardType           String
+  studyModesJson      String
+  durationYears       Int?
+  sourceAcademicYear  String
+  sourceUrl           String
+  sortOrder           Int      @default(0)
+  active              Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@unique([name, academicUnit, campus])
+  @@index([campus, active, academicUnit])
+  @@map("academic_programme")
+}
+
 model AdminProfile {
   id        String   @id @default(cuid())
   userId    String   @unique

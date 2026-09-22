@@ -19,6 +19,13 @@ export const profileService = {
     userId: string,
     data: { faculty?: string; department?: string; programme?: string; level?: string; expectedGraduationYear?: number }
   ): Promise<ServiceResult<boolean>> {
+    if (!data.faculty || !data.programme) {
+      return err("Select a faculty and programme", "VALIDATION_ERROR");
+    }
+    const programme = await talentRepository.findActiveAcademicProgramme(data.faculty, data.programme);
+    if (!programme) {
+      return err("Select a current USTED Kumasi programme from the catalogue", "VALIDATION_ERROR");
+    }
     const profile = await talentRepository.updateStudentProfile(userId, {
       level: data.level,
       expectedGraduationYear: data.expectedGraduationYear,
@@ -127,6 +134,10 @@ export const profileService = {
 
   async getCapabilityLibrary() {
     return talentRepository.getAllCapabilityFamilies();
+  },
+
+  async getAcademicProgrammes() {
+    return talentRepository.listAcademicProgrammes();
   },
 
   async getSectors() {
