@@ -1,0 +1,960 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ── Enums ──────────────────────────────────────────────────────────────────
+
+enum PlatformRole {
+  STUDENT
+  ADMIN
+  MODERATOR
+  VERIFIER
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING_VERIFICATION
+  DEACTIVATED
+}
+
+enum CapabilityProficiency {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum CapabilitySource {
+  SELF_SELECTED
+  AI_EXTRACTED
+  ADMIN_ADDED
+}
+
+enum VentureStage {
+  IDEA
+  VALIDATION
+  PROTOTYPE
+  EARLY_LAUNCH
+  OPERATE
+}
+
+enum VentureStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum CommitmentLevel {
+  CASUAL
+  SIDE_VENTURE
+  SERIOUS
+  FULL_TIME
+}
+
+enum MembershipType {
+  FOUNDER
+  CO_FOUNDER
+  TEAM_MEMBER
+  SPECIALIST
+}
+
+enum MembershipStatus {
+  ACTIVE
+  INVITED
+  LEFT
+  REMOVED
+}
+
+enum InvitationStatus {
+  PENDING
+  INTERESTED
+  DECLINED
+  WITHDRAWN
+  TRIAL_PROPOSED
+}
+
+enum InvitationType {
+  MATCH_INVITATION
+  DIRECT_INVITATION
+}
+
+enum TrialStatus {
+  PENDING
+  ACTIVE
+  UNDER_REVIEW
+  COMPLETED
+  CANCELLED
+}
+
+enum TrialTaskStatus {
+  PENDING
+  IN_PROGRESS
+  SUBMITTED
+  COMPLETED
+}
+
+enum TrialDecision {
+  CONTINUE
+  EXTEND
+  STOP
+}
+
+enum MilestoneStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+}
+
+enum ConversationType {
+  DIRECT
+  VENTURE
+}
+
+enum MessageType {
+  TEXT
+  SYSTEM
+  ATTACHMENT
+}
+
+enum ReportStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  DISMISSED
+}
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum RecommendationStatus {
+  ACTIVE
+  ACCEPTED
+  DECLINED
+  EXPIRED
+}
+
+enum RoomStatus {
+  OPEN
+  TRIAL_ACTIVE
+  CLOSED
+}
+
+enum CharterStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+// ── Better Auth required tables ──────────────────────────────────────────────
+
+model user {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          String    @default("student")
+
+  sessions        session[]
+  accounts        account[]
+  studentProfile  StudentProfile?
+  adminProfile    AdminProfile?
+  ownedVentures   Venture[]         @relation("VentureOwner")
+  ventureMembers  VentureMember[]
+  sentInvitations     VentureInvitation[] @relation("InvitationSender")
+  receivedInvitations VentureInvitation[] @relation("InvitationRecipient")
+  trialParticipations FounderTrialParticipant[]
+  trialTasks          FounderTrialTask[]        @relation("TaskAssignee")
+  trialEvidence       FounderTrialEvidence[]
+  trialReviews        FounderTrialReview[]
+  contributions       VentureContribution[]
+  sentMessages        Message[]
+  conversationParticipants ConversationParticipant[]
+  notifications       Notification[]
+  supportTickets      SupportTicket[]
+  reports             Report[]         @relation("Reporter")
+  moderationActions   ModerationAction[]
+  adminNotes          AdminNote[]
+  auditLogs           AuditLog[]
+  matchRecommendations MatchRecommendation[] @relation("CandidateMatches")
+  roomParticipants    VentureRoomParticipant[]
+  charterMembers      TeamCharterMember[]
+
+  @@map("user")
+}
+
+model session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+// ── Student / Talent Domain ──────────────────────────────────────────────────
+
+model StudentProfile {
+  id                     String    @id @default(cuid())
+  userId                 String    @unique
+  user                   user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio                    String?   @db.Text
+  level                  String?
+  expectedGraduationYear Int?
+  discoverability        Boolean   @default(true)
+  availabilityStatus     String    @default("AVAILABLE")
+  profileStrength        Int       @default(0)
+  onboardingCompleted    Boolean   @default(false)
+  onboardingStep         String    @default("academic")
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  academicProfile     AcademicProfile?
+  capabilities        StudentCapability[]
+  ventureInterests    StudentVentureInterest[]
+  founderPreference   FounderPreference?
+  availability        StudentAvailability?
+
+  @@map("student_profile")
+}
+
+model AcademicProfile {
+  id               String         @id @default(cuid())
+  studentProfileId String         @unique
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  faculty          String?
+  department       String?
+  programme        String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@map("academic_profile")
+}
+
+model AdminProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_profile")
+}
+
+// ── Capability Taxonomy ──────────────────────────────────────────────────────
+
+model CapabilityFamily {
+  id           String       @id @default(cuid())
+  name         String
+  slug         String       @unique
+  status       String       @default("ACTIVE")
+  sortOrder    Int          @default(0)
+  capabilities Capability[]
+
+  @@map("capability_family")
+}
+
+model Capability {
+  id          String           @id @default(cuid())
+  familyId    String
+  family      CapabilityFamily @relation(fields: [familyId], references: [id])
+  name        String
+  slug        String           @unique
+  description String?          @db.Text
+  status      String           @default("ACTIVE")
+  sortOrder   Int              @default(0)
+
+  studentCapabilities StudentCapability[]
+  ventureRequirements VentureCapabilityRequirement[]
+
+  @@map("capability")
+}
+
+model StudentCapability {
+  id               String                @id @default(cuid())
+  studentProfileId String
+  studentProfile   StudentProfile        @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  capabilityId     String
+  capability       Capability            @relation(fields: [capabilityId], references: [id])
+  proficiency      CapabilityProficiency @default(INTERMEDIATE)
+  source           CapabilitySource      @default(SELF_SELECTED)
+  confirmed        Boolean               @default(false)
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+
+  evidence CapabilityEvidence[]
+
+  @@unique([studentProfileId, capabilityId])
+  @@map("student_capability")
+}
+
+model CapabilityEvidence {
+  id                   String            @id @default(cuid())
+  studentCapabilityId  String
+  studentCapability    StudentCapability @relation(fields: [studentCapabilityId], references: [id], onDelete: Cascade)
+  type                 String
+  title                String
+  description          String?           @db.Text
+  cloudinaryPublicId   String?
+  url                  String?
+  linkUrl              String?
+  verificationStatus   String            @default("UNVERIFIED")
+  createdAt            DateTime          @default(now())
+
+  @@map("capability_evidence")
+}
+
+// ── Interests & Preferences ──────────────────────────────────────────────────
+
+model VentureSector {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?  @db.Text
+  status      String   @default("ACTIVE")
+  sortOrder   Int      @default(0)
+
+  ventures             Venture[]                @relation("PrimaryVentureSector")
+  venturesSecondary    Venture[]                @relation("SecondaryVentureSector")
+  studentInterests     StudentVentureInterest[]
+
+  @@map("venture_sector")
+}
+
+model StudentVentureInterest {
+  id               String         @id @default(cuid())
+  studentProfileId String
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  sectorId         String
+  sector           VentureSector  @relation(fields: [sectorId], references: [id])
+  strength         Int            @default(1)
+
+  @@unique([studentProfileId, sectorId])
+  @@map("student_venture_interest")
+}
+
+model FounderPreference {
+  id                       String         @id @default(cuid())
+  studentProfileId         String         @unique
+  studentProfile           StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  commitmentLevel          CommitmentLevel @default(SIDE_VENTURE)
+  preferredRoleCategory    String?
+  ventureGoal              String?
+  structuredVsFlexible     Int            @default(3)
+  independentVsCollaborative Int          @default(3)
+  fastVsDeliberate         Int            @default(3)
+  createdAt                DateTime       @default(now())
+  updatedAt                DateTime       @updatedAt
+
+  @@map("founder_preference")
+}
+
+model StudentAvailability {
+  id               String         @id @default(cuid())
+  studentProfileId String         @unique
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+  weeklyHoursBand  String         @default("5-10")
+  timezone         String?
+  notes            String?        @db.Text
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@map("student_availability")
+}
+
+// ── Venture Domain ───────────────────────────────────────────────────────────
+
+model Venture {
+  id                 String        @id @default(cuid())
+  ownerId            String
+  owner              user          @relation("VentureOwner", fields: [ownerId], references: [id])
+  name               String
+  slug               String        @unique
+  shortPitch         String?       @db.Text
+  problem            String?       @db.Text
+  solution           String?       @db.Text
+  targetUsers        String?       @db.Text
+  primarySectorId    String?
+  primarySector      VentureSector? @relation("PrimaryVentureSector", fields: [primarySectorId], references: [id])
+  secondarySectorId  String?
+  secondarySector    VentureSector? @relation("SecondaryVentureSector", fields: [secondarySectorId], references: [id])
+  stage              VentureStage  @default(IDEA)
+  ambition           String?
+  expectedCommitment CommitmentLevel @default(SIDE_VENTURE)
+  logoPublicId       String?
+  logoUrl            String?
+  status             VentureStatus @default(DRAFT)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  members              VentureMember[]
+  capabilityRequirements VentureCapabilityRequirement[]
+  dnaVersions          VentureDNA[]
+  recommendations      MatchRecommendation[]
+  invitations          VentureInvitation[]
+  rooms                VentureRoom[]
+  trials               FounderTrial[]
+  milestones           VentureMilestone[]
+  contributions        VentureContribution[]
+  healthSnapshots      VentureHealthSnapshot[]
+  conversations        Conversation[]
+  charter              TeamCharter?
+
+  @@index([ownerId])
+  @@index([primarySectorId])
+  @@index([stage, status])
+  @@map("venture")
+}
+
+model VentureMember {
+  id             String           @id @default(cuid())
+  ventureId      String
+  venture        Venture          @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  userId         String
+  user           user             @relation(fields: [userId], references: [id])
+  roleTitle      String?
+  membershipType MembershipType   @default(TEAM_MEMBER)
+  status         MembershipStatus @default(ACTIVE)
+  joinedAt       DateTime         @default(now())
+
+  @@unique([ventureId, userId])
+  @@map("venture_member")
+}
+
+model VentureCapabilityRequirement {
+  id             String     @id @default(cuid())
+  ventureId      String
+  venture        Venture    @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  capabilityId   String
+  capability     Capability @relation(fields: [capabilityId], references: [id])
+  importanceScore Int       @default(5)
+  priority       String     @default("MEDIUM")
+  source         String     @default("MANUAL")
+  confirmed      Boolean    @default(false)
+
+  @@unique([ventureId, capabilityId])
+  @@map("venture_capability_requirement")
+}
+
+model VentureDNA {
+  id                   String   @id @default(cuid())
+  ventureId            String
+  venture              Venture  @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  version              Int      @default(1)
+  structuredSummaryJson String? @db.Text
+  createdAt            DateTime @default(now())
+  confirmedAt          DateTime?
+
+  @@map("venture_dna")
+}
+
+// ── Matching Domain ──────────────────────────────────────────────────────────
+
+model MatchingConfiguration {
+  id                String    @id @default(cuid())
+  version           Int
+  capabilityWeight  Float     @default(0.35)
+  interestWeight    Float     @default(0.20)
+  commitmentWeight  Float     @default(0.15)
+  availabilityWeight Float    @default(0.10)
+  goalWeight        Float     @default(0.10)
+  workingStyleWeight Float    @default(0.05)
+  evidenceWeight    Float     @default(0.05)
+  active            Boolean   @default(false)
+  publishedAt       DateTime?
+  publishedBy       String?
+  createdAt         DateTime  @default(now())
+
+  recommendations   MatchRecommendation[]
+
+  @@map("matching_configuration")
+}
+
+model MatchRecommendation {
+  id               String                @id @default(cuid())
+  ventureId        String
+  venture          Venture               @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  candidateUserId  String
+  candidate        user                  @relation("CandidateMatches", fields: [candidateUserId], references: [id])
+  overallScore     Float
+  algorithmVersion String
+  configId         String?
+  config           MatchingConfiguration? @relation(fields: [configId], references: [id])
+  status           RecommendationStatus  @default(ACTIVE)
+  generatedAt      DateTime              @default(now())
+  expiresAt        DateTime?
+
+  factorScores     MatchFactorScore[]
+  invitations      VentureInvitation[]
+
+  @@index([ventureId, overallScore])
+  @@index([candidateUserId, generatedAt])
+  @@map("match_recommendation")
+}
+
+model MatchFactorScore {
+  id                  String              @id @default(cuid())
+  recommendationId    String
+  recommendation      MatchRecommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
+  factor              String
+  rawScore            Float
+  weight              Float
+  weightedScore       Float
+  explanationDataJson String?             @db.Text
+
+  @@map("match_factor_score")
+}
+
+model VentureInvitation {
+  id               String           @id @default(cuid())
+  ventureId        String
+  venture          Venture          @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  senderUserId     String
+  sender           user             @relation("InvitationSender", fields: [senderUserId], references: [id])
+  recipientUserId  String
+  recipient        user             @relation("InvitationRecipient", fields: [recipientUserId], references: [id])
+  recommendationId String?
+  recommendation   MatchRecommendation? @relation(fields: [recommendationId], references: [id])
+  proposedRole     String?
+  expectedCommitment CommitmentLevel?
+  message          String?          @db.Text
+  invitationType   InvitationType   @default(DIRECT_INVITATION)
+  status           InvitationStatus @default(PENDING)
+  createdAt        DateTime         @default(now())
+  respondedAt      DateTime?
+
+  @@index([recipientUserId, status])
+  @@map("venture_invitation")
+}
+
+// ── Founder Trial Domain ─────────────────────────────────────────────────────
+
+model VentureRoom {
+  id        String     @id @default(cuid())
+  ventureId String
+  venture   Venture    @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  status    RoomStatus @default(OPEN)
+  createdAt DateTime   @default(now())
+
+  participants VentureRoomParticipant[]
+  trials       FounderTrial[]
+
+  @@map("venture_room")
+}
+
+model VentureRoomParticipant {
+  id           String      @id @default(cuid())
+  roomId       String
+  room         VentureRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  userId       String
+  user         user        @relation(fields: [userId], references: [id])
+  proposedRole String?
+  status       String      @default("ACTIVE")
+
+  @@unique([roomId, userId])
+  @@map("venture_room_participant")
+}
+
+model FounderTrial {
+  id            String      @id @default(cuid())
+  ventureId     String
+  venture       Venture     @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  ventureRoomId String?
+  room          VentureRoom? @relation(fields: [ventureRoomId], references: [id])
+  status        TrialStatus @default(PENDING)
+  startAt       DateTime?
+  reviewAt      DateTime?
+  endAt         DateTime?
+  objective     String?     @db.Text
+  durationDays  Int         @default(7)
+  createdAt     DateTime    @default(now())
+
+  participants  FounderTrialParticipant[]
+  tasks         FounderTrialTask[]
+  reviews       FounderTrialReview[]
+
+  @@map("founder_trial")
+}
+
+model FounderTrialParticipant {
+  id             String       @id @default(cuid())
+  trialId        String
+  trial          FounderTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
+  userId         String
+  user           user         @relation(fields: [userId], references: [id])
+  proposedRole   String?
+  decisionStatus TrialDecision?
+
+  @@unique([trialId, userId])
+  @@map("founder_trial_participant")
+}
+
+model FounderTrialTask {
+  id              String          @id @default(cuid())
+  trialId         String
+  trial           FounderTrial    @relation(fields: [trialId], references: [id], onDelete: Cascade)
+  title           String
+  purpose         String?         @db.Text
+  assigneeUserId  String?
+  assignee        user?           @relation("TaskAssignee", fields: [assigneeUserId], references: [id])
+  dueAt           DateTime?
+  status          TrialTaskStatus @default(PENDING)
+  progressCurrent Int             @default(0)
+  progressTarget  Int             @default(100)
+  createdAt       DateTime        @default(now())
+
+  evidence FounderTrialEvidence[]
+
+  @@map("founder_trial_task")
+}
+
+model FounderTrialEvidence {
+  id                 String           @id @default(cuid())
+  taskId             String
+  task               FounderTrialTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  submittedBy        String
+  submitter          user             @relation(fields: [submittedBy], references: [id])
+  type               String
+  textValue          String?          @db.Text
+  url                String?
+  cloudinaryPublicId String?
+  createdAt          DateTime         @default(now())
+
+  @@map("founder_trial_evidence")
+}
+
+model FounderTrialReview {
+  id                  String       @id @default(cuid())
+  trialId             String
+  trial               FounderTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
+  reviewerUserId      String
+  reviewer            user         @relation(fields: [reviewerUserId], references: [id])
+  communicationScore  Int
+  reliabilityScore    Int
+  contributionScore   Int
+  commitmentScore     Int
+  goalAlignmentScore  Int
+  workedWellText      String?      @db.Text
+  concernsText        String?      @db.Text
+  decision            TrialDecision
+  submittedAt         DateTime     @default(now())
+
+  @@unique([trialId, reviewerUserId])
+  @@map("founder_trial_review")
+}
+
+// ── Team Charter ─────────────────────────────────────────────────────────────
+
+model TeamCharter {
+  id                  String        @id @default(cuid())
+  ventureId           String        @unique
+  venture             Venture       @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  version             Int           @default(1)
+  meetingFrequency    String?
+  communicationMethod String?
+  decisionMethod      String?
+  expectationsText    String?       @db.Text
+  status              CharterStatus @default(DRAFT)
+  createdAt           DateTime      @default(now())
+
+  members     TeamCharterMember[]
+  objectives  TeamObjective[]
+
+  @@map("team_charter")
+}
+
+model TeamCharterMember {
+  id                    String      @id @default(cuid())
+  charterId             String
+  charter               TeamCharter @relation(fields: [charterId], references: [id], onDelete: Cascade)
+  userId                String
+  user                  user        @relation(fields: [userId], references: [id])
+  roleTitle             String?
+  responsibilities      String?     @db.Text
+  weeklyCommitmentHours Int?
+  confirmedAt           DateTime?
+
+  @@unique([charterId, userId])
+  @@map("team_charter_member")
+}
+
+model TeamObjective {
+  id        String      @id @default(cuid())
+  charterId String
+  charter   TeamCharter @relation(fields: [charterId], references: [id], onDelete: Cascade)
+  title     String
+  order     Int         @default(0)
+
+  @@map("team_objective")
+}
+
+// ── Venture Development ──────────────────────────────────────────────────────
+
+model VentureMilestone {
+  id              String          @id @default(cuid())
+  ventureId       String
+  venture         Venture         @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  stage           VentureStage
+  title           String
+  objective       String?         @db.Text
+  expectedOutcome String?         @db.Text
+  status          MilestoneStatus @default(PLANNED)
+  dueAt           DateTime?
+  progressCurrent Int             @default(0)
+  progressTarget  Int             @default(100)
+  createdAt       DateTime        @default(now())
+  completedAt     DateTime?
+
+  contributions VentureContribution[]
+
+  @@map("venture_milestone")
+}
+
+model VentureContribution {
+  id          String           @id @default(cuid())
+  ventureId   String
+  venture     Venture          @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  userId      String
+  user        user             @relation(fields: [userId], references: [id])
+  milestoneId String?
+  milestone   VentureMilestone? @relation(fields: [milestoneId], references: [id])
+  category    String
+  title       String
+  description String?          @db.Text
+  evidenceUrl String?
+  publicId    String?
+  createdAt   DateTime         @default(now())
+
+  @@map("venture_contribution")
+}
+
+model VentureHealthSnapshot {
+  id                 String   @id @default(cuid())
+  ventureId          String
+  venture            Venture  @relation(fields: [ventureId], references: [id], onDelete: Cascade)
+  overallHealth      Float
+  milestoneProgress  Float
+  capabilityCoverage Float
+  participationScore Float
+  founderAlignment   Float
+  createdAt          DateTime @default(now())
+  algorithmVersion   String   @default("1.0")
+
+  @@map("venture_health_snapshot")
+}
+
+// ── Messaging & Notifications ────────────────────────────────────────────────
+
+model Conversation {
+  id          String           @id @default(cuid())
+  type        ConversationType @default(DIRECT)
+  ventureId   String?
+  venture     Venture?         @relation(fields: [ventureId], references: [id])
+  contextType String?
+  contextId   String?
+  createdAt   DateTime         @default(now())
+
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@map("conversation")
+}
+
+model ConversationParticipant {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           user         @relation(fields: [userId], references: [id])
+  joinedAt       DateTime     @default(now())
+  muted          Boolean      @default(false)
+  lastReadAt     DateTime?
+
+  @@unique([conversationId, userId])
+  @@map("conversation_participant")
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderUserId   String?
+  sender         user?        @relation(fields: [senderUserId], references: [id])
+  type           MessageType  @default(TEXT)
+  body           String       @db.Text
+  createdAt      DateTime     @default(now())
+  editedAt       DateTime?
+
+  attachments MessageAttachment[]
+
+  @@index([conversationId, createdAt])
+  @@map("message")
+}
+
+model MessageAttachment {
+  id                 String  @id @default(cuid())
+  messageId          String
+  message            Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  cloudinaryPublicId String?
+  url                String
+  resourceType       String
+  bytes              Int?
+
+  @@map("message_attachment")
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  userId     String
+  user       user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type       String
+  title      String
+  body       String   @db.Text
+  entityType String?
+  entityId   String?
+  readAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  @@index([userId, readAt, createdAt])
+  @@map("notification")
+}
+
+// ── Support & Moderation ─────────────────────────────────────────────────────
+
+model SupportTicket {
+  id                String              @id @default(cuid())
+  userId            String
+  user              user                @relation(fields: [userId], references: [id])
+  category          String
+  subject           String
+  description       String              @db.Text
+  relatedEntityType String?
+  relatedEntityId   String?
+  priority          String              @default("MEDIUM")
+  status            SupportTicketStatus @default(OPEN)
+  referenceCode     String              @unique @default(cuid())
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@map("support_ticket")
+}
+
+model Report {
+  id             String       @id @default(cuid())
+  reporterUserId String
+  reporter       user         @relation("Reporter", fields: [reporterUserId], references: [id])
+  entityType     String
+  entityId       String
+  reason         String
+  details        String?      @db.Text
+  priority       String       @default("MEDIUM")
+  status         ReportStatus @default(PENDING)
+  createdAt      DateTime     @default(now())
+
+  moderationActions ModerationAction[]
+
+  @@index([status, createdAt])
+  @@map("report")
+}
+
+model ModerationAction {
+  id          String   @id @default(cuid())
+  reportId    String?
+  report      Report?  @relation(fields: [reportId], references: [id])
+  adminUserId String
+  admin       user     @relation(fields: [adminUserId], references: [id])
+  action      String
+  reason      String?  @db.Text
+  createdAt   DateTime @default(now())
+
+  @@map("moderation_action")
+}
+
+model AdminNote {
+  id         String   @id @default(cuid())
+  entityType String
+  entityId   String
+  adminUserId String
+  admin      user     @relation(fields: [adminUserId], references: [id])
+  text       String   @db.Text
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@map("admin_note")
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorUserId  String?
+  actor        user?    @relation(fields: [actorUserId], references: [id])
+  action       String
+  entityType   String
+  entityId     String?
+  beforeJson   String?  @db.Text
+  afterJson    String?  @db.Text
+  metadataJson String?  @db.Text
+  createdAt    DateTime @default(now())
+
+  @@index([entityType, entityId, createdAt])
+  @@map("audit_log")
+}
+
+model SystemSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  @@map("system_setting")
+}

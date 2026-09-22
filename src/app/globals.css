@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+@theme {
+  /* ── Brand palette ── */
+  --color-navy-deep: #0B1D3A;
+  --color-teal-accent: #0AA08A;
+  --color-amber-warm: #F5A623;
+  --color-surface-subtle: #F3F6F9;
+  --color-surface-pure: #FFFFFF;
+
+  /* Material design surface tokens */
+  --color-surface: #f7fafd;
+  --color-surface-bright: #f7fafd;
+  --color-surface-dim: #d7dadd;
+  --color-surface-variant: #e0e3e6;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f1f4f7;
+  --color-surface-container: #ebeef1;
+  --color-surface-container-high: #e5e8eb;
+  --color-surface-container-highest: #e0e3e6;
+  --color-background: #f7fafd;
+
+  /* On-surface / text */
+  --color-on-surface: #181c1e;
+  --color-on-surface-variant: #44474d;
+  --color-inverse-on-surface: #eef1f4;
+  --color-inverse-surface: #2d3133;
+
+  /* Primary (navy) */
+  --color-primary: #00030f;
+  --color-primary-container: #0b1d3a;
+  --color-primary-fixed: #d7e2ff;
+  --color-primary-fixed-dim: #b6c7ec;
+  --color-on-primary: #ffffff;
+  --color-on-primary-fixed: #091b38;
+  --color-on-primary-fixed-variant: #374766;
+  --color-on-primary-container: #7585a8;
+  --color-inverse-primary: #b6c7ec;
+  --color-surface-tint: #4f5e7f;
+
+  /* Secondary (teal) */
+  --color-secondary: #006b5b;
+  --color-secondary-container: #7df4db;
+  --color-secondary-fixed: #80f7de;
+  --color-secondary-fixed-dim: #62dac2;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #007060;
+  --color-on-secondary-fixed: #00201a;
+  --color-on-secondary-fixed-variant: #005144;
+
+  /* Tertiary (amber) */
+  --color-tertiary: #080300;
+  --color-tertiary-container: #2c1a00;
+  --color-tertiary-fixed: #ffddb4;
+  --color-tertiary-fixed-dim: #ffb955;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #b77800;
+  --color-on-tertiary-fixed: #291800;
+  --color-on-tertiary-fixed-variant: #633f00;
+
+  /* Error */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #93000a;
+
+  /* Outline */
+  --color-outline: #75777e;
+  --color-outline-variant: #c5c6ce;
+
+  /* Typography */
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Border radius */
+  --radius-DEFAULT: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-margin: 2rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--color-surface-subtle);
+    color: var(--color-on-surface);
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    font-weight: normal;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    user-select: none;
+    vertical-align: middle;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .vm-card {
+    box-shadow: 0 1px 2px rgba(11,29,58,0.04), 0 6px 18px rgba(11,29,58,0.06);
+  }
+
+  /* Typography scale matching designs */
+  .text-display-lg { font-size: 40px; line-height: 48px; font-weight: 700; }
+  .text-display-lg-mobile { font-size: 32px; line-height: 40px; font-weight: 700; }
+  .text-headline-lg { font-size: 32px; line-height: 40px; font-weight: 600; }
+  .text-headline-lg-mobile { font-size: 24px; line-height: 32px; font-weight: 600; }
+  .text-headline-md { font-size: 24px; line-height: 32px; font-weight: 600; }
+  .text-headline-sm { font-size: 20px; line-height: 28px; font-weight: 600; }
+  .text-title-md { font-size: 16px; line-height: 24px; font-weight: 600; }
+  .text-body-lg { font-size: 16px; line-height: 24px; font-weight: 400; }
+  .text-body-md { font-size: 14px; line-height: 20px; font-weight: 400; }
+  .text-label-md { font-size: 14px; line-height: 20px; font-weight: 500; }
+  .text-label-sm { font-size: 12px; line-height: 16px; letter-spacing: 0.02em; font-weight: 600; }
+
+  /* Font-family aliases */
+  .font-display-lg, .font-headline-lg, .font-headline-md, .font-headline-sm,
+  .font-title-md, .font-body-lg, .font-body-md, .font-label-md, .font-label-sm,
+  .font-headline-lg-mobile, .font-display-lg-mobile {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  }
 }
