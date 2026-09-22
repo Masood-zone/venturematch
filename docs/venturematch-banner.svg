@@ -1,0 +1,25 @@
+<svg width="1440" height="420" viewBox="0 0 1440 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">VentureMatch</title>
+  <desc id="desc">Connect skills, build ventures, find complementary co-founders.</desc>
+  <rect width="1440" height="420" rx="28" fill="#0B1D3A"/>
+  <circle cx="1180" cy="110" r="270" fill="#0AA08A" fill-opacity=".18"/>
+  <circle cx="1320" cy="390" r="210" fill="#F5A623" fill-opacity=".14"/>
+  <circle cx="820" cy="390" r="210" fill="#D7E2FF" fill-opacity=".08"/>
+  <g opacity=".9">
+    <rect x="910" y="78" width="390" height="258" rx="22" fill="#F7FAFD"/>
+    <rect x="938" y="108" width="126" height="82" rx="14" fill="#E5E8EB"/>
+    <rect x="1080" y="108" width="126" height="82" rx="14" fill="#D9F5EF"/>
+    <rect x="1222" y="108" width="50" height="82" rx="14" fill="#FFF0CC"/>
+    <rect x="938" y="208" width="334" height="18" rx="9" fill="#0B1D3A" fill-opacity=".12"/>
+    <rect x="938" y="242" width="238" height="13" rx="6.5" fill="#0B1D3A" fill-opacity=".1"/>
+    <rect x="938" y="280" width="150" height="28" rx="14" fill="#0AA08A"/>
+  </g>
+  <g fill="#FFFFFF">
+    <rect x="88" y="78" width="56" height="56" rx="16" fill="#0AA08A"/>
+    <path d="M105 115L116 94L127 115H120L116 107L112 115H105Z"/>
+    <text x="164" y="113" font-family="Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="-.5">VentureMatch</text>
+    <text x="88" y="206" font-family="Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.6">Connect skills. Build ventures.</text>
+    <text x="88" y="262" font-family="Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="-1.6" fill="#0AA08A">Find your co-founder.</text>
+    <text x="90" y="322" font-family="Arial, sans-serif" font-size="21" fill="#D9E1EE">The multidisciplinary venture-building network for USTED innovators.</text>
+  </g>
+</svg>
