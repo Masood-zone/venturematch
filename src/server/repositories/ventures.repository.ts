@@ -9,7 +9,18 @@ export const venturesRepository = {
         primarySector: true,
         secondarySector: true,
         members: {
-          include: { user: { select: { id: true, name: true, image: true } } },
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+                studentProfile: {
+                  select: { capabilities: { select: { capabilityId: true } } },
+                },
+              },
+            },
+          },
         },
         capabilityRequirements: {
           include: { capability: { include: { family: true } } },
