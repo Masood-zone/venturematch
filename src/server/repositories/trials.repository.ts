@@ -154,8 +154,8 @@ export const trialsRepository = {
   }) {
     return db.founderTrialReview.upsert({
       where: { trialId_reviewerUserId: { trialId: data.trialId, reviewerUserId: data.reviewerUserId } },
-      update: data as any,
-      create: data as any,
+      update: data as never,
+      create: data as never,
     });
   },
 

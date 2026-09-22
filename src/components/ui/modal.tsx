@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface ModalProps {
   open: boolean;
   onClose: () => void;
@@ -36,7 +37,7 @@ export function Modal({ open, onClose, title, children, size = "md" }: ModalProp
               onClick={onClose}
               className="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors"
             >
-              <span className="material-symbols-outlined text-[20px] text-on-surface-variant">close</span>
+              <MaterialSymbol icon="close" className="text-[20px] text-on-surface-variant" />
             </button>
           </div>
         )}

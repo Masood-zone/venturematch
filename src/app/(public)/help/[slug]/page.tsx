@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   return { title: `Help — ${slug.replaceAll("-", " ")}` };
@@ -17,7 +18,7 @@ export default async function HelpArticlePage({ params }: { params: Promise<{ sl
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 mb-space-lg font-label-sm text-label-sm text-on-surface-variant">
             <Link href="/help" className="hover:text-navy-deep transition-colors">Help Centre</Link>
-            <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+            <MaterialSymbol icon="chevron_right" className="text-[14px]" />
             <span className="text-navy-deep font-semibold">{title}</span>
           </nav>
 
@@ -29,11 +30,11 @@ export default async function HelpArticlePage({ params }: { params: Promise<{ sl
             <h1 className="font-headline-lg text-headline-lg text-navy-deep font-bold mb-space-md">{title}</h1>
             <div className="flex items-center gap-space-md mb-space-xl pb-space-lg border-b border-surface-container-high">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[16px] text-on-surface-variant">update</span>
+                <MaterialSymbol icon="update" className="text-[16px] text-on-surface-variant" />
                 <span className="font-label-sm text-label-sm text-on-surface-variant">Updated recently</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[16px] text-on-surface-variant">schedule</span>
+                <MaterialSymbol icon="schedule" className="text-[16px] text-on-surface-variant" />
                 <span className="font-label-sm text-label-sm text-on-surface-variant">2 min read</span>
               </div>
             </div>
@@ -44,7 +45,7 @@ export default async function HelpArticlePage({ params }: { params: Promise<{ sl
 
               <div className="p-space-lg rounded-xl bg-surface-subtle border border-secondary-container/40">
                 <div className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-[20px] text-teal-accent flex-shrink-0 mt-0.5">info</span>
+                  <MaterialSymbol icon="info" className="text-[20px] text-teal-accent flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-title-md text-title-md text-navy-deep font-semibold mb-1">Quick Tip</h4>
                     <p className="font-body-md text-body-md text-on-surface-variant">
@@ -67,9 +68,9 @@ export default async function HelpArticlePage({ params }: { params: Promise<{ sl
                   href={`/help/${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`}
                   className="flex items-center gap-4 bg-surface-pure rounded-xl p-space-md shadow-sm hover:shadow-md transition-all group"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-teal-accent">article</span>
+                  <MaterialSymbol icon="article" className="text-[18px] text-teal-accent" />
                   <span className="font-label-md text-label-md text-navy-deep group-hover:text-teal-accent transition-colors">{title}</span>
-                  <span className="material-symbols-outlined text-[18px] text-on-surface-variant ml-auto">arrow_forward_ios</span>
+                  <MaterialSymbol icon="arrow_forward_ios" className="text-[18px] text-on-surface-variant ml-auto" />
                 </Link>
               ))}
             </div>

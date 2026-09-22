@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/shared/EmptyState";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Discover People" };
 
 export default async function DiscoverPeoplePage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
@@ -15,10 +16,9 @@ export default async function DiscoverPeoplePage({ searchParams }: { searchParam
   const page = Math.max(1, parseInt(pageStr ?? "1"));
   const pageSize = 12;
 
-  const [people, total, families] = await Promise.all([
+  const [people, total] = await Promise.all([
     talentRepository.listDiscoverable({ limit: pageSize, offset: (page - 1) * pageSize }),
     talentRepository.countDiscoverable({}),
-    talentRepository.getAllCapabilityFamilies(),
   ]);
 
   const totalPages = Math.ceil(total / pageSize);
@@ -31,7 +31,7 @@ export default async function DiscoverPeoplePage({ searchParams }: { searchParam
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Link href="/discover" className="font-label-md text-label-md text-on-surface-variant hover:text-navy-deep flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px]">arrow_back</span> Discover
+                <MaterialSymbol icon="arrow_back" className="text-[16px]" /> Discover
               </Link>
             </div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Discover People</h1>
@@ -84,7 +84,7 @@ export default async function DiscoverPeoplePage({ searchParams }: { searchParam
                         {p.availability?.weeklyHoursBand ?? "?"} hrs/week
                       </span>
                       <span className="font-label-sm text-label-sm text-teal-accent font-semibold flex items-center gap-1">
-                        View Profile <span className="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                        View Profile <MaterialSymbol icon="arrow_forward" className="text-[14px] group-hover:translate-x-0.5 transition-transform" />
                       </span>
                     </div>
                   </div>

@@ -6,6 +6,7 @@ import { MatchScoreBadge } from "@/components/shared/MatchScoreBadge";
 import { VentureStageBadge } from "@/components/shared/VentureStageBadge";
 import { Avatar } from "@/components/ui/avatar";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 type Invitation = {
   id: string; status: string; message?: string; proposedRole?: string; createdAt: string;
   venture: { id: string; name: string; stage: string; primarySector?: { name: string }; shortPitch?: string };
@@ -40,7 +41,7 @@ export default function InvitationDetailPage() {
 
   if (!invitation) return (
     <div className="px-gutter py-space-lg flex justify-center">
-      <span className="material-symbols-outlined text-[40px] text-teal-accent animate-spin">progress_activity</span>
+      <MaterialSymbol icon="progress_activity" className="text-[40px] text-teal-accent animate-spin" />
     </div>
   );
 
@@ -50,14 +51,14 @@ export default function InvitationDetailPage() {
     <div className="px-gutter py-space-lg">
       <div className="max-w-2xl mx-auto space-y-space-xl">
         <Link href="/match-requests" className="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-navy-deep">
-          <span className="material-symbols-outlined text-[18px]">arrow_back</span> Match Requests
+          <MaterialSymbol icon="arrow_back" className="text-[18px]" /> Match Requests
         </Link>
 
         {/* Invitation card */}
         <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl">
           <div className="flex items-center gap-3 mb-space-lg">
             <div className="w-12 h-12 rounded-2xl bg-navy-deep flex items-center justify-center">
-              <span className="material-symbols-outlined text-on-primary text-[22px]">rocket_launch</span>
+              <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[22px]" />
             </div>
             <div className="flex-1">
               <h1 className="font-headline-sm text-headline-sm text-navy-deep font-bold">{invitation.venture.name}</h1>
@@ -85,7 +86,7 @@ export default function InvitationDetailPage() {
           {/* Proposed role */}
           {invitation.proposedRole && (
             <div className="flex items-center gap-2 mb-space-md">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">badge</span>
+              <MaterialSymbol icon="badge" className="text-[18px] text-teal-accent" />
               <span className="font-body-md text-body-md text-on-surface">Proposed role: <strong className="text-navy-deep">{invitation.proposedRole}</strong></span>
             </div>
           )}
@@ -101,7 +102,7 @@ export default function InvitationDetailPage() {
           {/* Status or actions */}
           {!isPending ? (
             <div className="flex items-center gap-2 p-space-md rounded-xl bg-surface-subtle">
-              <span className="material-symbols-outlined text-[20px] text-teal-accent">info</span>
+              <MaterialSymbol icon="info" className="text-[20px] text-teal-accent" />
               <span className="font-body-md text-body-md text-on-surface">You have already responded: <strong className="text-navy-deep">{invitation.status}</strong></span>
             </div>
           ) : (
@@ -111,8 +112,8 @@ export default function InvitationDetailPage() {
                 disabled={responding}
                 className="flex-1 inline-flex items-center justify-center gap-2 h-12 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all disabled:opacity-60"
               >
-                {responding ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : (
-                  <><span className="material-symbols-outlined text-[18px]">handshake</span>Interested — Let&apos;s Talk</>
+                {responding ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : (
+                  <><MaterialSymbol icon="handshake" className="text-[18px]" />Interested — Let&apos;s Talk</>
                 )}
               </button>
               <button
@@ -120,7 +121,7 @@ export default function InvitationDetailPage() {
                 disabled={responding}
                 className="flex-1 inline-flex items-center justify-center gap-2 h-12 px-6 border-2 border-outline-variant hover:border-error text-on-surface-variant hover:text-error font-label-md text-label-md rounded-xl transition-all disabled:opacity-60"
               >
-                <span className="material-symbols-outlined text-[18px]">close</span>
+                <MaterialSymbol icon="close" className="text-[18px]" />
                 Decline
               </button>
             </div>
@@ -131,9 +132,9 @@ export default function InvitationDetailPage() {
           href={`/discover/ventures/${invitation.venture.id}`}
           className="flex items-center gap-3 p-space-md rounded-2xl bg-surface-pure shadow-sm hover:shadow-md transition-all group"
         >
-          <span className="material-symbols-outlined text-[20px] text-teal-accent">rocket_launch</span>
+          <MaterialSymbol icon="rocket_launch" className="text-[20px] text-teal-accent" />
           <span className="font-label-md text-label-md text-navy-deep group-hover:text-teal-accent transition-colors">View full venture profile</span>
-          <span className="material-symbols-outlined text-[18px] text-on-surface-variant ml-auto">chevron_right</span>
+          <MaterialSymbol icon="chevron_right" className="text-[18px] text-on-surface-variant ml-auto" />
         </Link>
       </div>
     </div>

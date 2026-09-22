@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/shared/EmptyState";
 import { formatRelativeTime } from "@/lib/utils";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Match Requests" };
 
 export default async function MatchRequestsPage() {
@@ -48,7 +49,7 @@ export default async function MatchRequestsPage() {
               <div key={inv.id} className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
                 <div className="flex items-start gap-space-md flex-wrap">
                   <div className="w-12 h-12 rounded-2xl bg-navy-deep flex items-center justify-center flex-shrink-0">
-                    <span className="material-symbols-outlined text-on-primary text-[22px]">rocket_launch</span>
+                    <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[22px]" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between flex-wrap gap-2">
@@ -75,7 +76,7 @@ export default async function MatchRequestsPage() {
                         href={`/invitations/${inv.id}`}
                         className="inline-flex items-center gap-2 h-10 px-4 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all"
                       >
-                        <span className="material-symbols-outlined text-[18px]">open_in_new</span>
+                        <MaterialSymbol icon="open_in_new" className="text-[18px]" />
                         Review Invitation
                       </Link>
                     </div>

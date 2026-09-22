@@ -1,10 +1,11 @@
 import { getServerSession } from "@/server/permissions";
 import { venturesRepository } from "@/server/repositories/ventures.repository";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { VentureStageBadge } from "@/components/shared/VentureStageBadge";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Venture DNA" };
 
 export default async function VentureDNAPage({ params }: { params: Promise<{ ventureId: string }> }) {
@@ -22,7 +23,7 @@ export default async function VentureDNAPage({ params }: { params: Promise<{ ven
       <div className="max-w-3xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Venture DNA</h1>
@@ -70,7 +71,7 @@ export default async function VentureDNAPage({ params }: { params: Promise<{ ven
                   type="submit"
                   className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all"
                 >
-                  <span className="material-symbols-outlined text-[18px]">save</span>
+                  <MaterialSymbol icon="save" className="text-[18px]" />
                   Save DNA
                 </button>
               </div>
@@ -96,7 +97,7 @@ export default async function VentureDNAPage({ params }: { params: Promise<{ ven
         {dna && (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
             <div className="flex items-center gap-2 mb-3">
-              <span className="material-symbols-outlined text-[20px] text-teal-accent">psychology</span>
+              <MaterialSymbol icon="psychology" className="text-[20px] text-teal-accent" />
               <h2 className="font-title-md text-title-md text-navy-deep font-semibold">AI-Structured Summary</h2>
               <span className="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm ml-auto">v{dna.version}</span>
             </div>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Trial Result" };
 
 export default async function TrialResultPage({ params }: { params: Promise<{ trialId: string }> }) {
@@ -37,14 +38,14 @@ export default async function TrialResultPage({ params }: { params: Promise<{ tr
       <div className="max-w-3xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/trials/${trialId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Trial Result</h1>
         </div>
 
         {/* Decision banner */}
         <div className={`rounded-2xl p-space-xl flex items-center gap-4 ${dc.color}`}>
-          <span className="material-symbols-outlined text-[40px]" style={{ fontVariationSettings: "'FILL' 1" }}>{dc.icon}</span>
+          <MaterialSymbol icon={dc.icon} className="text-[40px]" style={{ fontVariationSettings: "'FILL' 1" }} />
           <div>
             <h2 className="font-headline-sm text-headline-sm font-bold">{dc.label}</h2>
             <p className="font-body-md text-body-md opacity-80 mt-1">
@@ -103,7 +104,7 @@ export default async function TrialResultPage({ params }: { params: Promise<{ tr
         {majorityDecision === "CONTINUE" && (
           <div className="flex gap-3">
             <Link href={`/ventures/${trial.ventureId}/charter`} className="flex-1 inline-flex items-center justify-center gap-2 h-12 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all">
-              <span className="material-symbols-outlined text-[18px]">description</span>
+              <MaterialSymbol icon="description" className="text-[18px]" />
               Create Team Charter
             </Link>
             <Link href={`/ventures/${trial.ventureId}`} className="flex-1 inline-flex items-center justify-center gap-2 h-12 border-2 border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md rounded-xl transition-all">

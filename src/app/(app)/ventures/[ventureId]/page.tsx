@@ -6,7 +6,9 @@ import { VentureStageBadge } from "@/components/shared/VentureStageBadge";
 import { Avatar } from "@/components/ui/avatar";
 import { CapabilityChip } from "@/components/shared/CapabilityChip";
 import type { Metadata } from "next";
+import Image from "next/image";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export async function generateMetadata({ params }: { params: Promise<{ ventureId: string }> }): Promise<Metadata> {
   const { ventureId } = await params;
   const v = await venturesRepository.findById(ventureId);
@@ -33,14 +35,12 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
   if (!venture) notFound();
 
   const isOwner = session?.user.id === venture.ownerId;
-  const isMember = venture.members.some(m => m.userId === session?.user?.id && m.status === "ACTIVE");
-
   return (
     <div className="px-gutter py-space-lg">
       <div className="max-w-5xl mx-auto space-y-space-xl">
         {/* Back */}
         <Link href="/ventures" className="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-navy-deep transition-colors">
-          <span className="material-symbols-outlined text-[18px]">arrow_back</span> My Ventures
+          <MaterialSymbol icon="arrow_back" className="text-[18px]" /> My Ventures
         </Link>
 
         {/* Venture header */}
@@ -48,8 +48,8 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
           <div className="flex flex-col md:flex-row md:items-start gap-space-lg">
             <div className="w-16 h-16 rounded-2xl bg-navy-deep flex items-center justify-center flex-shrink-0 shadow-sm">
               {venture.logoUrl
-                ? <img src={venture.logoUrl} alt="" className="w-full h-full object-cover rounded-2xl" />
-                : <span className="material-symbols-outlined text-on-primary text-[28px]">rocket_launch</span>
+                ? <Image src={venture.logoUrl} alt="" width={64} height={64} className="object-cover rounded-2xl" unoptimized />
+                : <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[28px]" />
               }
             </div>
             <div className="flex-1 min-w-0">
@@ -69,7 +69,7 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
                     {venture.status === "DRAFT" && (
                       <form action={`/api/v1/ventures/${ventureId}/publish`} method="POST">
                         <button type="submit" className="inline-flex items-center gap-2 h-9 px-4 rounded-xl bg-teal-accent text-on-primary font-label-md text-label-md shadow-sm hover:bg-secondary transition-all text-[13px]">
-                          <span className="material-symbols-outlined text-[16px]">publish</span> Publish
+                          <MaterialSymbol icon="publish" className="text-[16px]" /> Publish
                         </button>
                       </form>
                     )}
@@ -92,7 +92,7 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
                 href={`/ventures/${ventureId}${item.href}`}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-pure hover:text-navy-deep transition-all whitespace-nowrap"
               >
-                <span className="material-symbols-outlined text-[16px]">{item.icon}</span>
+                <MaterialSymbol icon={item.icon} className="text-[16px]" />
                 {item.label}
               </Link>
             ))}
@@ -108,7 +108,7 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
                 {venture.problem && (
                   <div>
                     <h3 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-2">
-                      <span className="material-symbols-outlined text-[18px] text-teal-accent">search</span> Problem
+                      <MaterialSymbol icon="search" className="text-[18px] text-teal-accent" /> Problem
                     </h3>
                     <p className="font-body-md text-body-md text-on-surface-variant">{venture.problem}</p>
                   </div>
@@ -116,14 +116,14 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
                 {venture.solution && (
                   <div>
                     <h3 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-2">
-                      <span className="material-symbols-outlined text-[18px] text-teal-accent">lightbulb</span> Solution
+                      <MaterialSymbol icon="lightbulb" className="text-[18px] text-teal-accent" /> Solution
                     </h3>
                     <p className="font-body-md text-body-md text-on-surface-variant">{venture.solution}</p>
                   </div>
                 )}
                 {isOwner && (
                   <Link href={`/ventures/${ventureId}/dna`} className="inline-flex items-center gap-1 font-label-md text-label-md text-teal-accent hover:underline mt-2">
-                    Edit details <span className="material-symbols-outlined text-[16px]">edit</span>
+                    Edit details <MaterialSymbol icon="edit" className="text-[16px]" />
                   </Link>
                 )}
               </div>
@@ -156,7 +156,7 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
                   { label: "Team Charter", icon: "description", href: `/ventures/${ventureId}/charter` },
                 ].map(a => (
                   <Link key={a.label} href={a.href} className="flex flex-col items-center gap-2 p-3 rounded-xl bg-surface-subtle hover:bg-surface-container transition-all text-center">
-                    <span className="material-symbols-outlined text-[22px] text-teal-accent">{a.icon}</span>
+                    <MaterialSymbol icon={a.icon} className="text-[22px] text-teal-accent" />
                     <span className="font-label-sm text-label-sm text-navy-deep font-semibold">{a.label}</span>
                   </Link>
                 ))}
@@ -178,7 +178,7 @@ export default async function VentureDetailPage({ params }: { params: Promise<{ 
                       <p className="font-label-sm text-label-sm text-on-surface-variant">{m.membershipType}</p>
                     </div>
                     {m.userId === venture.ownerId && (
-                      <span className="material-symbols-outlined text-[16px] text-teal-accent">star</span>
+                      <MaterialSymbol icon="star" className="text-[16px] text-teal-accent" />
                     )}
                   </div>
                 ))}

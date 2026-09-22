@@ -1,20 +1,18 @@
 import { venturesRepository } from "@/server/repositories/ventures.repository";
-import { getServerSession } from "@/server/permissions";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Team Charter" };
 
 export default async function VentureCharterPage({ params }: { params: Promise<{ ventureId: string }> }) {
-  const session = await getServerSession();
   const { ventureId } = await params;
   const venture = await venturesRepository.findById(ventureId);
   if (!venture) notFound();
 
   const charter = await venturesRepository.getCharter(ventureId);
-  const isOwner = session?.user.id === venture.ownerId;
 
   return (
     <div className="px-gutter py-space-lg">
@@ -22,7 +20,7 @@ export default async function VentureCharterPage({ params }: { params: Promise<{
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-              <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+              <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
             </Link>
             <div>
               <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Team Charter</h1>
@@ -34,7 +32,7 @@ export default async function VentureCharterPage({ params }: { params: Promise<{
 
         {!charter ? (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl text-center">
-            <span className="material-symbols-outlined text-[48px] text-on-surface-variant block mb-3">description</span>
+            <MaterialSymbol icon="description" className="text-[48px] text-on-surface-variant block mb-3" />
             <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold mb-2">No Team Charter yet</h2>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto">A Team Charter documents roles, commitments, and working agreements for the founding team.</p>
           </div>
@@ -50,7 +48,7 @@ export default async function VentureCharterPage({ params }: { params: Promise<{
                   { label: "Decision Method", value: charter.decisionMethod, icon: "how_to_vote" },
                 ].filter(r => r.value).map(row => (
                   <div key={row.label} className="flex items-center gap-3 p-3 rounded-xl bg-surface-subtle">
-                    <span className="material-symbols-outlined text-[18px] text-teal-accent">{row.icon}</span>
+                    <MaterialSymbol icon={row.icon} className="text-[18px] text-teal-accent" />
                     <div>
                       <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{row.label}</p>
                       <p className="font-body-md text-body-md text-navy-deep">{row.value}</p>
@@ -82,7 +80,7 @@ export default async function VentureCharterPage({ params }: { params: Promise<{
                         <span className="font-label-sm text-label-sm text-on-surface-variant">{m.weeklyCommitmentHours} hrs/week</span>
                       )}
                       {m.confirmedAt && (
-                        <span className="material-symbols-outlined text-[18px] text-teal-accent">verified</span>
+                        <MaterialSymbol icon="verified" className="text-[18px] text-teal-accent" />
                       )}
                     </div>
                   ))}

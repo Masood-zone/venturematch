@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 const CATEGORIES = [
   { value: "ACCOUNT", label: "Account & Profile", icon: "manage_accounts" },
   { value: "VENTURE", label: "Ventures", icon: "rocket_launch" },
@@ -46,14 +47,14 @@ export default function SupportPage() {
         <div className="max-w-lg mx-auto">
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl text-center">
             <div className="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center mx-auto mb-4">
-              <span className="material-symbols-outlined text-[32px] text-on-secondary-container">check_circle</span>
+              <MaterialSymbol icon="check_circle" className="text-[32px] text-on-secondary-container" />
             </div>
             <h1 className="font-headline-md text-headline-md text-navy-deep font-bold mb-2">Ticket Submitted</h1>
             <p className="font-body-lg text-body-lg text-on-surface-variant mb-space-lg">
               Your support ticket has been received. Our team will respond within 2 hours during business hours.
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-low mb-space-xl">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">confirmation_number</span>
+              <MaterialSymbol icon="confirmation_number" className="text-[18px] text-teal-accent" />
               <span className="font-title-md text-title-md text-navy-deep font-semibold">{refCode}</span>
             </div>
             <div className="flex flex-col gap-3">
@@ -84,13 +85,13 @@ export default function SupportPage() {
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Support</h1>
             <p className="font-body-md text-body-md text-on-surface-variant mt-1">Our team typically responds within 2 business hours.</p>
           </div>
-          <a
+          <Link
             href="/help"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md transition-all"
           >
-            <span className="material-symbols-outlined text-[18px] text-teal-accent">help</span>
+            <MaterialSymbol icon="help" className="text-[18px] text-teal-accent" />
             Browse Help Centre
-          </a>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-xl">
@@ -100,7 +101,7 @@ export default function SupportPage() {
             { icon: "chat", label: "Support Channel", value: "In-app ticketing" },
           ].map(item => (
             <div key={item.label} className="p-space-md rounded-2xl bg-surface-pure shadow-sm text-center">
-              <span className="material-symbols-outlined text-[24px] text-teal-accent block mb-2">{item.icon}</span>
+              <MaterialSymbol icon={item.icon} className="text-[24px] text-teal-accent block mb-2" />
               <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{item.label}</p>
               <p className="font-title-md text-title-md text-navy-deep font-semibold mt-1">{item.value}</p>
             </div>
@@ -121,7 +122,7 @@ export default function SupportPage() {
                   onClick={() => setCategory(c.value)}
                   className={`flex items-center gap-2 p-3 rounded-xl border-2 transition-all text-left font-label-md text-label-md ${category === c.value ? "border-navy-deep bg-navy-deep/5 text-navy-deep" : "border-transparent bg-surface-subtle text-on-surface-variant hover:border-outline-variant"}`}
                 >
-                  <span className={`material-symbols-outlined text-[18px] ${category === c.value ? "text-teal-accent" : "text-on-surface-variant"}`}>{c.icon}</span>
+                  <MaterialSymbol icon={c.icon} className={`text-[18px] ${category === c.value ? "text-teal-accent" : "text-on-surface-variant"}`} />
                   {c.label}
                 </button>
               ))}
@@ -167,8 +168,8 @@ export default function SupportPage() {
               disabled={loading}
               className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all disabled:opacity-60"
             >
-              {loading ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : (
-                <><span className="material-symbols-outlined text-[18px]">send</span> Submit Ticket</>
+              {loading ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : (
+                <><MaterialSymbol icon="send" className="text-[18px]" /> Submit Ticket</>
               )}
             </button>
           </div>

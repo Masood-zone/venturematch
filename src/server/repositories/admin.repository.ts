@@ -9,7 +9,7 @@ export const adminRepository = {
     limit?: number;
     offset?: number;
   }) {
-    const { role, status, search, limit = 25, offset = 0 } = filters;
+    const { role, search, limit = 25, offset = 0 } = filters;
     return db.user.findMany({
       where: {
         ...(role ? { role } : {}),
@@ -76,10 +76,10 @@ export const adminRepository = {
     limit?: number;
     offset?: number;
   }) {
-    const { status, entityType, limit = 25, offset = 0 } = filters;
+    const { entityType, limit = 25, offset = 0 } = filters;
     return db.report.findMany({
       where: {
-        ...(status ? { status: status as never } : {}),
+        ...(filters.status ? { status: filters.status as never } : {}),
         ...(entityType ? { entityType } : {}),
       },
       include: {
@@ -179,10 +179,10 @@ export const adminRepository = {
     limit?: number;
     offset?: number;
   }) {
-    const { status, userId, limit = 25, offset = 0 } = filters;
+    const { userId, limit = 25, offset = 0 } = filters;
     return db.supportTicket.findMany({
       where: {
-        ...(status ? { status: status as never } : {}),
+        ...(filters.status ? { status: filters.status as never } : {}),
         ...(userId ? { userId } : {}),
       },
       include: {

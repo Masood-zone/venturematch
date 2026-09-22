@@ -1,7 +1,5 @@
-import { PrismaClient } from "../src/generated/prisma";
-import { hash } from "crypto";
-
-const db = new PrismaClient();
+import "dotenv/config";
+import { db } from "../src/lib/db";
 
 async function main() {
   console.log("Seeding VentureMatch database...");

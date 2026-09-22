@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 const STEPS = [
   { num: 1, label: "Academic", path: "/onboarding/academic" },
   { num: 2, label: "Capabilities", path: "/onboarding/capabilities" },
@@ -31,7 +32,7 @@ export function OnboardingProgress({ current }: OnboardingProgressProps) {
                 )}
               >
                 {done ? (
-                  <span className="material-symbols-outlined text-[14px]">check</span>
+                  <MaterialSymbol icon="check" className="text-[14px]" />
                 ) : (
                   step.num
                 )}

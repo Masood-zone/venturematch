@@ -1,5 +1,5 @@
 import { notificationsRepository } from "@/server/repositories/notifications.repository";
-import { ok, err, type ServiceResult } from "@/lib/errors";
+import { ok, type ServiceResult } from "@/lib/errors";
 
 export const notificationService = {
   async getForUser(userId: string, options: { unreadOnly?: boolean; page?: number; pageSize?: number } = {}) {

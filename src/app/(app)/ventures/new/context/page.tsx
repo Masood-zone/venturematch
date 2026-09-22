@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export default function NewVentureContextPage() {
   const router = useRouter();
   return (
@@ -9,7 +10,7 @@ export default function NewVentureContextPage() {
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center gap-3 mb-space-xl">
           <Link href="/ventures/new" className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <h1 className="font-headline-lg text-headline-lg text-navy-deep">Venture Context</h1>
         </div>

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { getMatchLabel } from "@/lib/utils";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface MatchScoreBadgeProps {
   score: number;
   size?: "sm" | "md" | "lg";
@@ -32,7 +33,7 @@ export function MatchScoreBadge({ score, size = "md", showLabel, className }: Ma
           sizes[size]
         )}
       >
-        <span className="material-symbols-outlined text-[14px]">verified</span>
+        <MaterialSymbol icon="verified" className="text-[14px]" />
         {score}%
       </span>
       {showLabel && (

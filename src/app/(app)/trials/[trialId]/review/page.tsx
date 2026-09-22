@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
-function ScoreInput({ label, name, value, onChange }: { label: string; name: string; value: number; onChange: (v: number) => void }) {
+import { MaterialSymbol } from "@/components/ui/material-symbol";
+function ScoreInput({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -58,7 +59,7 @@ export default function TrialReviewPage() {
       <div className="max-w-2xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/trials/${trialId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Submit Review</h1>
@@ -66,15 +67,15 @@ export default function TrialReviewPage() {
           </div>
         </div>
 
-        {error && <div className="p-3 rounded-lg bg-error-container flex items-center gap-2"><span className="material-symbols-outlined text-on-error-container text-[18px]">error</span><p className="font-body-md text-body-md text-on-error-container">{error}</p></div>}
+        {error && <div className="p-3 rounded-lg bg-error-container flex items-center gap-2"><MaterialSymbol icon="error" className="text-on-error-container text-[18px]" /><p className="font-body-md text-body-md text-on-error-container">{error}</p></div>}
 
         <form onSubmit={handleSubmit} className="bg-surface-pure rounded-2xl shadow-sm p-space-xl space-y-space-lg">
           <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold">Collaboration Scores</h2>
-          <ScoreInput label="Communication" name="communicationScore" value={scores.communicationScore} onChange={v => setScores(s => ({ ...s, communicationScore: v }))} />
-          <ScoreInput label="Reliability" name="reliabilityScore" value={scores.reliabilityScore} onChange={v => setScores(s => ({ ...s, reliabilityScore: v }))} />
-          <ScoreInput label="Contribution Quality" name="contributionScore" value={scores.contributionScore} onChange={v => setScores(s => ({ ...s, contributionScore: v }))} />
-          <ScoreInput label="Commitment Level" name="commitmentScore" value={scores.commitmentScore} onChange={v => setScores(s => ({ ...s, commitmentScore: v }))} />
-          <ScoreInput label="Goal Alignment" name="goalAlignmentScore" value={scores.goalAlignmentScore} onChange={v => setScores(s => ({ ...s, goalAlignmentScore: v }))} />
+          <ScoreInput label="Communication" value={scores.communicationScore} onChange={v => setScores(s => ({ ...s, communicationScore: v }))} />
+          <ScoreInput label="Reliability" value={scores.reliabilityScore} onChange={v => setScores(s => ({ ...s, reliabilityScore: v }))} />
+          <ScoreInput label="Contribution Quality" value={scores.contributionScore} onChange={v => setScores(s => ({ ...s, contributionScore: v }))} />
+          <ScoreInput label="Commitment Level" value={scores.commitmentScore} onChange={v => setScores(s => ({ ...s, commitmentScore: v }))} />
+          <ScoreInput label="Goal Alignment" value={scores.goalAlignmentScore} onChange={v => setScores(s => ({ ...s, goalAlignmentScore: v }))} />
 
           <div className="flex flex-col gap-1.5">
             <label className="font-label-md text-label-md text-navy-deep font-semibold">What worked well?</label>
@@ -96,7 +97,7 @@ export default function TrialReviewPage() {
               ].map(opt => (
                 <button key={opt.value} type="button" onClick={() => setDecision(opt.value)}
                   className={`p-3 rounded-xl border-2 text-left transition-all ${decision === opt.value ? opt.color : "border-transparent bg-surface-subtle hover:border-outline-variant"}`}>
-                  <span className={`material-symbols-outlined text-[20px] block mb-1 ${decision === opt.value ? (opt.value === "CONTINUE" ? "text-teal-accent" : opt.value === "EXTEND" ? "text-amber-warm" : "text-error") : "text-on-surface-variant"}`}>{opt.icon}</span>
+                  <MaterialSymbol icon={opt.icon} className={`text-[20px] block mb-1 ${decision === opt.value ? (opt.value === "CONTINUE" ? "text-teal-accent" : opt.value === "EXTEND" ? "text-amber-warm" : "text-error") : "text-on-surface-variant"}`} />
                   <span className="font-label-md text-label-md text-navy-deep font-semibold">{opt.label}</span>
                   <p className="font-label-sm text-label-sm text-on-surface-variant">{opt.desc}</p>
                 </button>
@@ -107,7 +108,7 @@ export default function TrialReviewPage() {
           <div className="flex items-center justify-between pt-space-md border-t border-surface-container-high">
             <Link href={`/trials/${trialId}`} className="font-label-md text-label-md text-on-surface-variant hover:text-navy-deep transition-colors">Cancel</Link>
             <button type="submit" disabled={saving} className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all disabled:opacity-60">
-              {saving ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : <><span className="material-symbols-outlined text-[18px]">rate_review</span>Submit Review</>}
+              {saving ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : <><MaterialSymbol icon="rate_review" className="text-[18px]" />Submit Review</>}
             </button>
           </div>
         </form>

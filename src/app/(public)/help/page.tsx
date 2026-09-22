@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 const CATEGORIES = [
   { icon: "person_search", label: "Talent DNA & Profile", count: 8, slug: "talent-dna" },
   { icon: "auto_awesome", label: "Match Score & Algorithm", count: 6, slug: "matching" },
@@ -59,7 +60,7 @@ export default function HelpPage() {
               </p>
               <div className="mt-8 w-full max-w-2xl relative">
                 <div className="relative flex items-center shadow-md rounded-xl bg-surface-pure focus-within:shadow-xl focus-within:ring-2 focus-within:ring-teal-accent transition-all">
-                  <span className="material-symbols-outlined text-outline-variant pl-4 text-[24px]">search</span>
+                  <MaterialSymbol icon="search" className="text-outline-variant pl-4 text-[24px]" />
                   <input
                     type="text"
                     value={query}
@@ -69,7 +70,7 @@ export default function HelpPage() {
                   />
                   {query && (
                     <button onClick={() => setQuery("")} className="absolute right-3 p-1.5 rounded-lg text-outline-variant hover:text-navy-deep hover:bg-surface-subtle">
-                      <span className="material-symbols-outlined text-[18px]">close</span>
+                      <MaterialSymbol icon="close" className="text-[18px]" />
                     </button>
                   )}
                 </div>
@@ -96,7 +97,7 @@ export default function HelpPage() {
                 {CATEGORIES.map(cat => (
                   <div key={cat.slug} className="bg-surface-pure rounded-2xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
                     <div className="w-10 h-10 rounded-xl bg-surface-subtle flex items-center justify-center mb-3">
-                      <span className="material-symbols-outlined text-[20px] text-teal-accent">{cat.icon}</span>
+                      <MaterialSymbol icon={cat.icon} className="text-[20px] text-teal-accent" />
                     </div>
                     <h3 className="font-title-md text-title-md text-navy-deep font-semibold">{cat.label}</h3>
                     <p className="font-label-sm text-label-sm text-on-surface-variant mt-1">{cat.count} articles</p>
@@ -113,7 +114,7 @@ export default function HelpPage() {
             </h2>
             {filtered.length === 0 ? (
               <div className="text-center py-16">
-                <span className="material-symbols-outlined text-[48px] text-on-surface-variant">search_off</span>
+                <MaterialSymbol icon="search_off" className="text-[48px] text-on-surface-variant" />
                 <p className="font-body-lg text-body-lg text-on-surface-variant mt-4">No articles found for &ldquo;{query}&rdquo;</p>
               </div>
             ) : (
@@ -125,13 +126,13 @@ export default function HelpPage() {
                     className="flex items-start gap-4 bg-surface-pure rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
                   >
                     <div className="w-8 h-8 rounded-lg bg-surface-subtle flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="material-symbols-outlined text-[18px] text-teal-accent">article</span>
+                      <MaterialSymbol icon="article" className="text-[18px] text-teal-accent" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-title-md text-title-md text-navy-deep group-hover:text-teal-accent transition-colors">{art.title}</h3>
                       <p className="font-body-md text-body-md text-on-surface-variant mt-1 line-clamp-2">{art.excerpt}</p>
                     </div>
-                    <span className="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-teal-accent transition-colors flex-shrink-0">arrow_forward_ios</span>
+                    <MaterialSymbol icon="arrow_forward_ios" className="text-[20px] text-on-surface-variant group-hover:text-teal-accent transition-colors flex-shrink-0" />
                   </Link>
                 ))}
               </div>
@@ -148,7 +149,7 @@ export default function HelpPage() {
               href="/support"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-navy-deep text-on-primary font-label-md text-label-md shadow-sm hover:bg-on-primary-fixed transition-all"
             >
-              <span className="material-symbols-outlined text-[18px]">support_agent</span>
+              <MaterialSymbol icon="support_agent" className="text-[18px]" />
               <span>Contact Support</span>
             </Link>
           </div>

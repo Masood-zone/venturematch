@@ -2,6 +2,7 @@ import { adminService } from "@/server/services/admin.service";
 import Link from "next/link";
 import { formatRelativeTime } from "@/lib/utils";
 import type { Metadata } from "next";
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Moderation — Admin" };
 
 export default async function AdminModerationPage({ searchParams }: { searchParams: Promise<{ page?: string; status?: string }> }) {
@@ -34,7 +35,7 @@ export default async function AdminModerationPage({ searchParams }: { searchPara
       </div>
       {reports.length === 0 ? (
         <div className="bg-surface-pure rounded-2xl shadow-sm p-16 text-center">
-          <span className="material-symbols-outlined text-[48px] text-teal-accent block mb-3">verified_user</span>
+          <MaterialSymbol icon="verified_user" className="text-[48px] text-teal-accent block mb-3" />
           <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold mb-2">Queue is clear</h2>
           <p className="font-body-md text-body-md text-on-surface-variant">No reports matching this filter.</p>
         </div>

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { type InputHTMLAttributes, forwardRef } from "react";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
@@ -19,9 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative flex items-center">
           {icon && (
-            <span className="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none select-none">
-              {icon}
-            </span>
+            <MaterialSymbol icon={icon} className="absolute left-3.5 text-outline text-[20px] pointer-events-none select-none" />
           )}
           <input
             ref={ref}

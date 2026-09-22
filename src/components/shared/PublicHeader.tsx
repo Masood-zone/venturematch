@@ -1,11 +1,12 @@
 import Link from "next/link";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export function PublicHeader() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-surface-pure/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(11,29,58,0.04)] flex items-center justify-between px-gutter">
       <Link href="/" className="flex items-center gap-space-sm">
         <div className="w-8 h-8 rounded-lg bg-navy-deep flex items-center justify-center">
-          <span className="material-symbols-outlined text-on-primary text-[18px]">rocket_launch</span>
+          <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[18px]" />
         </div>
         <span className="font-title-md text-title-md text-navy-deep font-bold">VentureMatch</span>
       </Link>

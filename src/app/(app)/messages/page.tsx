@@ -6,6 +6,7 @@ import { formatRelativeTime } from "@/lib/utils";
 import { EmptyState } from "@/components/shared/EmptyState";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Messages" };
 
 export default async function MessagesPage() {
@@ -55,7 +56,7 @@ export default async function MessagesPage() {
                       </p>
                     )}
                   </div>
-                  <span className="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors flex-shrink-0">chevron_right</span>
+                  <MaterialSymbol icon="chevron_right" className="text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors flex-shrink-0" />
                 </Link>
               );
             })}

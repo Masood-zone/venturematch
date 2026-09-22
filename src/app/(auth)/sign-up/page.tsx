@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { AuthShell } from "@/components/shared/AuthShell";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 function calcStrength(pw: string): { score: number; label: string; color: string } {
   let score = 0;
   if (pw.length > 0) score++;
@@ -73,7 +74,7 @@ export default function SignUpPage() {
         {/* Header */}
         <div className="w-full text-center max-w-2xl px-space-md mb-space-xl">
           <div className="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container mb-space-sm shadow-sm">
-            <span className="material-symbols-outlined text-teal-accent text-[14px]">hub</span>
+            <MaterialSymbol icon="hub" className="text-teal-accent text-[14px]" />
             <span className="font-label-sm text-label-sm text-navy-deep uppercase tracking-wider">Student Founder Network</span>
           </div>
           <h1 className="font-headline-lg text-headline-lg text-navy-deep font-bold tracking-tight mb-space-xs">
@@ -92,12 +93,12 @@ export default function SignUpPage() {
             <div className="bg-surface-pure rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md relative overflow-hidden">
               <div className="flex items-center gap-space-md">
                 <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-surface-container flex items-center justify-center">
-                  <span className="material-symbols-outlined text-on-surface-variant text-[28px]">group</span>
+                  <MaterialSymbol icon="group" className="text-on-surface-variant text-[28px]" />
                 </div>
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5">
                     <span className="font-title-md text-title-md text-navy-deep font-bold truncate">Kwame &amp; Sarah</span>
-                    <span className="material-symbols-outlined text-teal-accent text-[14px]">verified</span>
+                    <MaterialSymbol icon="verified" className="text-teal-accent text-[14px]" />
                   </div>
                   <span className="font-label-sm text-label-sm text-on-surface-variant">Computer Science + Business Admin</span>
                 </div>
@@ -130,7 +131,7 @@ export default function SignUpPage() {
             ].map(p => (
               <div key={p.icon} className="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low shadow-sm">
                 <div className="p-1.5 bg-surface-pure rounded-md text-teal-accent flex-shrink-0">
-                  <span className="material-symbols-outlined text-[20px]">{p.icon}</span>
+                  <MaterialSymbol icon={p.icon} className="text-[20px]" />
                 </div>
                 <div>
                   <h4 className="font-title-md text-title-md text-navy-deep font-semibold">{p.title}</h4>
@@ -148,12 +149,12 @@ export default function SignUpPage() {
                 <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold">Step 1: Identity &amp; Access</h2>
                 <p className="font-body-md text-body-md text-on-surface-variant">Use your institutional address to enable instant auto-verification.</p>
               </div>
-              <span className="material-symbols-outlined text-teal-accent text-[28px]">badge</span>
+              <MaterialSymbol icon="badge" className="text-teal-accent text-[28px]" />
             </div>
 
             {error && (
               <div className="mb-space-md p-3 rounded-lg bg-error-container flex items-center gap-2">
-                <span className="material-symbols-outlined text-on-error-container text-[18px]">error</span>
+                <MaterialSymbol icon="error" className="text-on-error-container text-[18px]" />
                 <p className="font-body-md text-body-md text-on-error-container">{error}</p>
               </div>
             )}
@@ -163,7 +164,7 @@ export default function SignUpPage() {
               <div className="flex flex-col gap-1.5">
                 <label className="font-label-md text-label-md text-navy-deep font-semibold" htmlFor="name">Full Name</label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">person</span>
+                  <MaterialSymbol icon="person" className="absolute left-3 text-outline text-[20px] pointer-events-none" />
                   <input
                     id="name" type="text" required value={name} onChange={e => setName(e.target.value)}
                     placeholder="Your full name"
@@ -179,7 +180,7 @@ export default function SignUpPage() {
                   <span className="text-teal-accent text-label-sm font-medium">USTED Institutional ID</span>
                 </label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">mail</span>
+                  <MaterialSymbol icon="mail" className="absolute left-3 text-outline text-[20px] pointer-events-none" />
                   <input
                     id="signup-email" type="email" required value={email} onChange={e => setEmail(e.target.value)}
                     placeholder="e.g., student@st.usted.edu.gh"
@@ -187,7 +188,7 @@ export default function SignUpPage() {
                   />
                 </div>
                 <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[14px] text-outline">info</span> Must end with institutional domain (@*.usted.edu.gh)
+                  <MaterialSymbol icon="info" className="text-[14px] text-outline" /> Must end with institutional domain (@*.usted.edu.gh)
                 </span>
               </div>
 
@@ -198,14 +199,14 @@ export default function SignUpPage() {
                   <span className={`font-label-sm text-label-sm font-medium ${strength.color}`}>{strength.label}</span>
                 </div>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">key</span>
+                  <MaterialSymbol icon="key" className="absolute left-3 text-outline text-[20px] pointer-events-none" />
                   <input
                     id="pw" type={showPw ? "text" : "password"} required value={password} onChange={e => setPassword(e.target.value)}
                     placeholder="Create a strong passphrase"
                     className="w-full h-11 pl-10 pr-11 rounded-lg bg-surface-subtle text-navy-deep font-body-md text-body-md placeholder:text-outline/70 focus:outline-none focus:bg-surface-pure focus:ring-2 focus:ring-teal-accent transition-all"
                   />
                   <button type="button" aria-label="Toggle password visibility" onClick={() => setShowPw(p => !p)} className="absolute right-3 text-outline hover:text-navy-deep focus:outline-none">
-                    <span className="material-symbols-outlined text-[20px]">{showPw ? "visibility_off" : "visibility"}</span>
+                    <MaterialSymbol icon={showPw ? "visibility_off" : "visibility"} className="text-[20px]" />
                   </button>
                 </div>
                 {/* Strength bars */}
@@ -222,7 +223,7 @@ export default function SignUpPage() {
                     { label: "1+ symbol or uppercase", met: /[!@#$%^&*()]|[A-Z]/.test(password) },
                   ].map(r => (
                     <span key={r.label} className={`flex items-center gap-1 ${r.met ? "text-teal-accent font-medium" : "text-outline"}`}>
-                      <span className="material-symbols-outlined text-[14px]">{r.met ? "check_circle" : "circle"}</span>
+                      <MaterialSymbol icon={r.met ? "check_circle" : "circle"} className="text-[14px]" />
                       {r.label}
                     </span>
                   ))}
@@ -233,14 +234,14 @@ export default function SignUpPage() {
               <div className="flex flex-col gap-1.5">
                 <label className="font-label-md text-label-md text-navy-deep font-semibold" htmlFor="confirm-pw">Confirm Password</label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">lock</span>
+                  <MaterialSymbol icon="lock" className="absolute left-3 text-outline text-[20px] pointer-events-none" />
                   <input
                     id="confirm-pw" type="password" required value={confirm} onChange={e => setConfirm(e.target.value)}
                     placeholder="Re-enter your password"
                     className="w-full h-11 pl-10 pr-11 rounded-lg bg-surface-subtle text-navy-deep font-body-md text-body-md placeholder:text-outline/70 focus:outline-none focus:bg-surface-pure focus:ring-2 focus:ring-teal-accent transition-all"
                   />
                   {passwordsMatch && (
-                    <span className="absolute right-3 material-symbols-outlined text-teal-accent text-[20px]">check_circle</span>
+                    <MaterialSymbol icon="check_circle" className="absolute right-3 text-teal-accent text-[20px]" />
                   )}
                 </div>
               </div>
@@ -267,11 +268,11 @@ export default function SignUpPage() {
                   className="w-full h-[46px] rounded-lg bg-navy-deep text-on-primary font-title-md text-title-md font-semibold flex items-center justify-center gap-space-sm hover:opacity-95 shadow-md active:scale-[0.99] transition-all disabled:opacity-60"
                 >
                   {loading ? (
-                    <span className="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+                    <MaterialSymbol icon="progress_activity" className="text-[20px] animate-spin" />
                   ) : (
                     <>
                       <span>Create Account</span>
-                      <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+                      <MaterialSymbol icon="arrow_forward" className="text-[20px]" />
                     </>
                   )}
                 </button>
@@ -282,7 +283,7 @@ export default function SignUpPage() {
                 <span className="font-body-md text-body-md text-on-surface-variant">Already have an account?</span>
                 <Link href="/sign-in" className="font-title-md text-title-md text-teal-accent font-semibold ml-1 hover:underline inline-flex items-center gap-0.5">
                   Sign In
-                  <span className="material-symbols-outlined text-[14px]">login</span>
+                  <MaterialSymbol icon="login" className="text-[14px]" />
                 </Link>
               </div>
             </form>

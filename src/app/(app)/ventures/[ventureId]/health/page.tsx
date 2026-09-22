@@ -1,10 +1,10 @@
-import { getServerSession } from "@/server/permissions";
 import { venturesRepository } from "@/server/repositories/ventures.repository";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Progress } from "@/components/ui/progress";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Venture Health" };
 
 export default async function VentureHealthPage({ params }: { params: Promise<{ ventureId: string }> }) {
@@ -20,7 +20,7 @@ export default async function VentureHealthPage({ params }: { params: Promise<{ 
       <div className="max-w-3xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Venture Health</h1>
@@ -55,7 +55,7 @@ export default async function VentureHealthPage({ params }: { params: Promise<{ 
                 <div key={f.label} className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[18px] text-teal-accent">{f.icon}</span>
+                      <MaterialSymbol icon={f.icon} className="text-[18px] text-teal-accent" />
                       <span className="font-title-md text-title-md text-navy-deep font-semibold">{f.label}</span>
                     </div>
                     <span className="font-headline-sm text-headline-sm font-bold text-navy-deep">{Math.round(f.value)}%</span>
@@ -67,12 +67,12 @@ export default async function VentureHealthPage({ params }: { params: Promise<{ 
           </>
         ) : (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl text-center">
-            <span className="material-symbols-outlined text-[48px] text-on-surface-variant block mb-3">favorite_border</span>
+            <MaterialSymbol icon="favorite_border" className="text-[48px] text-on-surface-variant block mb-3" />
             <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold mb-2">No health data yet</h2>
             <p className="font-body-md text-body-md text-on-surface-variant mb-6">Run a health check to generate your first score.</p>
             <form action={`/api/v1/ventures/${ventureId}/health`} method="POST">
               <button type="submit" className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all">
-                <span className="material-symbols-outlined text-[18px]">favorite</span>
+                <MaterialSymbol icon="favorite" className="text-[18px]" />
                 Run Health Check
               </button>
             </form>

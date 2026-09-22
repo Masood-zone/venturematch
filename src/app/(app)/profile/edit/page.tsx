@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import type { Metadata } from "next";
-
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export default function EditProfilePage() {
   const router = useRouter();
   const [bio, setBio] = useState("");
@@ -37,7 +36,7 @@ export default function EditProfilePage() {
       <div className="max-w-2xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <button onClick={() => router.back()} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </button>
           <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Edit Profile</h1>
         </div>
@@ -79,9 +78,9 @@ export default function EditProfilePage() {
               className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all disabled:opacity-60"
             >
               {saved ? (
-                <><span className="material-symbols-outlined text-[18px]">check</span>Saved!</>
+                <><MaterialSymbol icon="check" className="text-[18px]" />Saved!</>
               ) : loading ? (
-                <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
+                <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" />
               ) : (
                 <>Save Changes</>
               )}
@@ -94,15 +93,15 @@ export default function EditProfilePage() {
           <p className="font-body-md text-body-md text-on-surface-variant mb-4">Re-run the onboarding steps to update your capability selections and venture interests.</p>
           <div className="flex flex-wrap gap-3">
             <a href="/onboarding/capabilities" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md transition-all">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">psychology</span>
+              <MaterialSymbol icon="psychology" className="text-[18px] text-teal-accent" />
               Update Capabilities
             </a>
             <a href="/onboarding/interests" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md transition-all">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">explore</span>
+              <MaterialSymbol icon="explore" className="text-[18px] text-teal-accent" />
               Update Interests
             </a>
             <a href="/onboarding/preferences" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md transition-all">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">tune</span>
+              <MaterialSymbol icon="tune" className="text-[18px] text-teal-accent" />
               Update Preferences
             </a>
           </div>

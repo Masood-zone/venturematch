@@ -1,6 +1,5 @@
 import { talentRepository } from "@/server/repositories/talent.repository";
 import { ok, err, type ServiceResult } from "@/lib/errors";
-import { slugify } from "@/lib/utils";
 
 export const profileService = {
   async getProfile(userId: string): Promise<ServiceResult<Awaited<ReturnType<typeof talentRepository.findById>>>> {

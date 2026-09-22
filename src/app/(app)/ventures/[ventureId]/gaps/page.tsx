@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { CapabilityChip } from "@/components/shared/CapabilityChip";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 type CapFamily = { id: string; name: string; capabilities: { id: string; name: string }[] };
 type Requirement = { capabilityId: string; importanceScore: number; priority: string };
 
 export default function VentureGapsPage() {
   const { ventureId } = useParams<{ ventureId: string }>();
-  const router = useRouter();
   const [families, setFamilies] = useState<CapFamily[]>([]);
   const [requirements, setRequirements] = useState<Requirement[]>([]);
   const [saving, setSaving] = useState(false);
@@ -60,7 +60,7 @@ export default function VentureGapsPage() {
       <div className="max-w-3xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Capability Gaps</h1>
@@ -100,9 +100,9 @@ export default function VentureGapsPage() {
                 disabled={saving}
                 className={`inline-flex items-center gap-2 h-10 px-5 rounded-xl font-label-md text-label-md transition-all ${saved ? "bg-teal-accent text-on-primary" : "bg-navy-deep text-on-primary hover:bg-on-primary-fixed"} disabled:opacity-60`}
               >
-                {saved ? <><span className="material-symbols-outlined text-[18px]">check</span>Saved!</>
-                  : saving ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
-                  : <><span className="material-symbols-outlined text-[18px]">save</span>Save Requirements</>}
+                {saved ? <><MaterialSymbol icon="check" className="text-[18px]" />Saved!</>
+                  : saving ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" />
+                  : <><MaterialSymbol icon="save" className="text-[18px]" />Save Requirements</>}
               </button>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function VentureGapsPage() {
                     className={`px-3 py-1.5 rounded-full font-label-md text-label-md transition-all ${selectedIds.has(cap.id) ? "bg-navy-deep text-on-primary" : "bg-surface-container-high text-on-surface-variant hover:bg-surface-container"}`}
                   >
                     {cap.name}
-                    {selectedIds.has(cap.id) && <span className="ml-1.5 material-symbols-outlined text-[12px] align-middle">check</span>}
+                    {selectedIds.has(cap.id) && <MaterialSymbol icon="check" className="ml-1.5 text-[12px] align-middle" />}
                   </button>
                 ))}
               </div>

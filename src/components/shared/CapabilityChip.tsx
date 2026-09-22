@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface CapabilityChipProps {
   name: string;
   proficiency?: "BEGINNER" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";
@@ -65,7 +66,7 @@ export function CapabilityChip({
           onClick={(e) => { e.stopPropagation(); onRemove?.(); }}
           className="ml-0.5 hover:opacity-70 transition-opacity"
         >
-          <span className="material-symbols-outlined text-[14px]">close</span>
+          <MaterialSymbol icon="close" className="text-[14px]" />
         </button>
       )}
     </div>

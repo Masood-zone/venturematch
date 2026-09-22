@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { formatDate } from "@/lib/utils";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Founder Trial" };
 
 export default async function TrialDetailPage({ params }: { params: Promise<{ trialId: string }> }) {
@@ -15,7 +16,6 @@ export default async function TrialDetailPage({ params }: { params: Promise<{ tr
   const trial = await trialsRepository.getTrial(trialId);
   if (!trial) notFound();
 
-  const isOwner = session?.user.id === trial.venture.ownerId;
   const isParticipant = trial.participants.some(p => p.userId === session?.user.id);
   const hasReviewed = trial.reviews.some(r => r.reviewerUserId === session?.user.id);
   const completedTasks = trial.tasks.filter(t => t.status === "COMPLETED").length;
@@ -37,7 +37,7 @@ export default async function TrialDetailPage({ params }: { params: Promise<{ tr
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
           <div className="flex items-center gap-3">
             <Link href={`/ventures/${trial.ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-              <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+              <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
             </Link>
             <div>
               <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Founder Trial</h1>
@@ -56,7 +56,7 @@ export default async function TrialDetailPage({ params }: { params: Promise<{ tr
               { label: "Started", value: trial.startAt ? formatDate(trial.startAt) : "—", icon: "play_circle" },
             ].map(m => (
               <div key={m.label} className="flex items-center gap-3 p-3 rounded-xl bg-surface-subtle">
-                <span className="material-symbols-outlined text-[20px] text-teal-accent">{m.icon}</span>
+                <MaterialSymbol icon={m.icon} className="text-[20px] text-teal-accent" />
                 <div>
                   <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{m.label}</p>
                   <p className="font-title-md text-title-md text-navy-deep font-semibold">{m.value}</p>
@@ -96,7 +96,7 @@ export default async function TrialDetailPage({ params }: { params: Promise<{ tr
               href={item.disabled ? "#" : item.href}
               className={`flex flex-col items-center gap-2 p-4 rounded-2xl transition-all text-center ${item.disabled ? "bg-surface-subtle text-on-surface-variant opacity-50 cursor-not-allowed" : "bg-surface-pure shadow-sm hover:shadow-md hover:-translate-y-0.5"}`}
             >
-              <span className={`material-symbols-outlined text-[24px] ${item.disabled ? "text-on-surface-variant" : "text-teal-accent"}`}>{item.icon}</span>
+              <MaterialSymbol icon={item.icon} className={`text-[24px] ${item.disabled ? "text-on-surface-variant" : "text-teal-accent"}`} />
               <span className="font-label-md text-label-md text-navy-deep font-semibold">{item.label}</span>
             </Link>
           ))}
@@ -115,7 +115,7 @@ export default async function TrialDetailPage({ params }: { params: Promise<{ tr
                     <p className="font-label-md text-label-md text-navy-deep font-semibold">{p.user.name}</p>
                     {p.proposedRole && <p className="font-label-sm text-label-sm text-on-surface-variant">{p.proposedRole}</p>}
                   </div>
-                  {hasReviewed && <span className="flex items-center gap-1 font-label-sm text-label-sm text-teal-accent"><span className="material-symbols-outlined text-[16px]">rate_review</span>Reviewed</span>}
+                  {hasReviewed && <span className="flex items-center gap-1 font-label-sm text-label-sm text-teal-accent"><MaterialSymbol icon="rate_review" className="text-[16px]" />Reviewed</span>}
                 </div>
               );
             })}
@@ -133,7 +133,7 @@ export default async function TrialDetailPage({ params }: { params: Promise<{ tr
               href={`/trials/${trialId}/review`}
               className="inline-flex items-center gap-2 h-11 px-5 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all"
             >
-              <span className="material-symbols-outlined text-[18px]">rate_review</span>
+              <MaterialSymbol icon="rate_review" className="text-[18px]" />
               Submit Review
             </Link>
           </div>

@@ -5,6 +5,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { formatRelativeTime } from "@/lib/utils";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Contributions" };
 
 export default async function VentureContributionsPage({ params }: { params: Promise<{ ventureId: string }> }) {
@@ -20,7 +21,7 @@ export default async function VentureContributionsPage({ params }: { params: Pro
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-              <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+              <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
             </Link>
             <div>
               <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Contributions</h1>
@@ -31,7 +32,7 @@ export default async function VentureContributionsPage({ params }: { params: Pro
 
         {contributions.length === 0 ? (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl text-center">
-            <span className="material-symbols-outlined text-[48px] text-on-surface-variant block mb-3">construction</span>
+            <MaterialSymbol icon="construction" className="text-[48px] text-on-surface-variant block mb-3" />
             <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold mb-2">No contributions yet</h2>
             <p className="font-body-md text-body-md text-on-surface-variant">Team members can log their contributions to milestones here.</p>
           </div>
@@ -50,7 +51,7 @@ export default async function VentureContributionsPage({ params }: { params: Pro
                     {c.description && <p className="font-body-md text-body-md text-on-surface-variant mt-2">{c.description}</p>}
                     {c.milestone && (
                       <div className="flex items-center gap-1.5 mt-2">
-                        <span className="material-symbols-outlined text-[14px] text-teal-accent">flag</span>
+                        <MaterialSymbol icon="flag" className="text-[14px] text-teal-accent" />
                         <span className="font-label-sm text-label-sm text-teal-accent">{c.milestone.title}</span>
                       </div>
                     )}

@@ -7,6 +7,7 @@ import { CapabilityChip } from "@/components/shared/CapabilityChip";
 import { Badge } from "@/components/ui/badge";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export async function generateMetadata({ params }: { params: Promise<{ userId: string }> }): Promise<Metadata> {
   const { userId } = await params;
   const profile = await talentRepository.findById(userId);
@@ -26,7 +27,7 @@ export default async function StudentProfilePage({ params }: { params: Promise<{
       <div className="max-w-3xl mx-auto space-y-space-xl">
         {/* Back */}
         <Link href="/discover/people" className="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-navy-deep transition-colors">
-          <span className="material-symbols-outlined text-[18px]">arrow_back</span> Back to Discover
+          <MaterialSymbol icon="arrow_back" className="text-[18px]" /> Back to Discover
         </Link>
 
         {/* Profile card */}
@@ -62,7 +63,7 @@ export default async function StudentProfilePage({ params }: { params: Promise<{
                     href={`/messages?start=${userId}`}
                     className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-navy-deep text-on-primary font-label-md text-label-md shadow-sm hover:bg-on-primary-fixed transition-all"
                   >
-                    <span className="material-symbols-outlined text-[18px]">chat</span>
+                    <MaterialSymbol icon="chat" className="text-[18px]" />
                     Message
                   </Link>
                 </form>
@@ -75,7 +76,7 @@ export default async function StudentProfilePage({ params }: { params: Promise<{
         {profile.capabilities.length > 0 && (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
             <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-4">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">psychology</span>
+              <MaterialSymbol icon="psychology" className="text-[18px] text-teal-accent" />
               Capabilities
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -90,7 +91,7 @@ export default async function StudentProfilePage({ params }: { params: Promise<{
         {profile.ventureInterests.length > 0 && (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
             <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-4">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">explore</span>
+              <MaterialSymbol icon="explore" className="text-[18px] text-teal-accent" />
               Venture Interests
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -105,7 +106,7 @@ export default async function StudentProfilePage({ params }: { params: Promise<{
         {profile.founderPreference && (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
             <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-4">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">tune</span>
+              <MaterialSymbol icon="tune" className="text-[18px] text-teal-accent" />
               Working Style
             </h2>
             <div className="grid grid-cols-2 gap-3">

@@ -4,13 +4,30 @@ import Link from "next/link";
 import { VentureStageBadge } from "@/components/shared/VentureStageBadge";
 import { Avatar } from "@/components/ui/avatar";
 import type { Metadata } from "next";
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Venture Detail — Admin" };
+
+type AdminVentureDetail = {
+  id: string;
+  name: string;
+  status: string;
+  stage: string;
+  expectedCommitment: string;
+  shortPitch?: string | null;
+  members: Array<{
+    userId: string;
+    status: string;
+    membershipType: string;
+    user?: { name?: string | null; image?: string | null } | null;
+  }>;
+  owner: { name: string | null };
+};
 
 export default async function AdminVentureDetailPage({ params }: { params: Promise<{ ventureId: string }> }) {
   const { ventureId } = await params;
   const result = await adminService.getVentureDetail(ventureId);
   if (!result.success) notFound();
-  const v = result.data as any;
+  const v = result.data as AdminVentureDetail;
 
   const STATUSES = ["DRAFT","ACTIVE","PAUSED","COMPLETED","ARCHIVED"];
 
@@ -18,7 +35,7 @@ export default async function AdminVentureDetailPage({ params }: { params: Promi
     <div className="space-y-6 max-w-4xl">
       <div className="flex items-center gap-3">
         <Link href="/admin/ventures" className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-          <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+          <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
         </Link>
         <div>
           <h1 className="font-headline-lg text-headline-lg text-navy-deep">{v.name}</h1>
@@ -68,10 +85,10 @@ export default async function AdminVentureDetailPage({ params }: { params: Promi
       <div className="bg-surface-pure rounded-2xl shadow-sm p-5">
         <h2 className="font-title-md text-title-md text-navy-deep font-semibold mb-3">Team Members</h2>
         <div className="space-y-2">
-          {v.members.filter((m: { status: string }) => m.status === "ACTIVE").map((m: { userId: string; membershipType: string; user?: { name: string; image?: string } }) => (
+          {v.members.filter((m: { status: string }) => m.status === "ACTIVE").map((m: { userId: string; membershipType: string; user?: { name?: string | null; image?: string | null } | null }) => (
             <div key={m.userId} className="flex items-center gap-3 p-2 rounded-lg bg-surface-subtle">
-              <Avatar name={m.user?.name} size="sm" />
-              <span className="font-label-md text-label-md text-navy-deep">{m.user?.name}</span>
+              <Avatar name={m.user?.name ?? undefined} size="sm" />
+              <span className="font-label-md text-label-md text-navy-deep">{m.user?.name ?? "Unknown user"}</span>
               <span className="ml-auto font-label-sm text-label-sm text-on-surface-variant">{m.membershipType}</span>
             </div>
           ))}

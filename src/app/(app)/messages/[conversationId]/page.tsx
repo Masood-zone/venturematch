@@ -5,17 +5,15 @@ import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { formatRelativeTime } from "@/lib/utils";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 type Message = {
   id: string; body: string; createdAt: string; type: string;
   sender?: { id: string; name: string; image?: string };
 };
-type Participant = { userId: string; user: { id: string; name: string; image?: string } };
-
 export default function ConversationPage() {
   const { conversationId } = useParams<{ conversationId: string }>();
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [participants, setParticipants] = useState<Participant[]>([]);
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
   const [currentUserId, setCurrentUserId] = useState("");
@@ -61,14 +59,14 @@ export default function ConversationPage() {
       {/* Header */}
       <div className="flex items-center gap-3 px-gutter py-3 bg-surface-pure border-b border-surface-container-high shadow-sm flex-shrink-0">
         <button onClick={() => router.push("/messages")} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-          <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+          <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
         </button>
         <Avatar name="Conversation" size="sm" />
         <div className="flex-1 min-w-0">
           <p className="font-title-md text-title-md text-navy-deep font-semibold truncate">Conversation</p>
         </div>
         <Link href={`/messages/${conversationId}/details`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-          <span className="material-symbols-outlined text-[22px] text-on-surface-variant">info</span>
+          <MaterialSymbol icon="info" className="text-[22px] text-on-surface-variant" />
         </Link>
       </div>
 
@@ -76,7 +74,7 @@ export default function ConversationPage() {
       <div className="flex-1 overflow-y-auto px-gutter py-space-lg space-y-3">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center">
-            <span className="material-symbols-outlined text-[48px] text-on-surface-variant mb-3">chat</span>
+            <MaterialSymbol icon="chat" className="text-[48px] text-on-surface-variant mb-3" />
             <p className="font-body-lg text-body-lg text-on-surface-variant">No messages yet. Say hello!</p>
           </div>
         )}
@@ -121,8 +119,8 @@ export default function ConversationPage() {
             className="w-11 h-11 rounded-full bg-navy-deep flex items-center justify-center text-on-primary shadow-sm hover:bg-on-primary-fixed transition-all disabled:opacity-50"
           >
             {sending
-              ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
-              : <span className="material-symbols-outlined text-[18px]">send</span>
+              ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" />
+              : <MaterialSymbol icon="send" className="text-[18px]" />
             }
           </button>
         </form>

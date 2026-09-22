@@ -9,6 +9,7 @@ import { MatchScoreBadge } from "@/components/shared/MatchScoreBadge";
 import { CapabilityChip } from "@/components/shared/CapabilityChip";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export async function generateMetadata({ params }: { params: Promise<{ ventureId: string }> }): Promise<Metadata> {
   const { ventureId } = await params;
   const venture = await venturesRepository.findById(ventureId);
@@ -34,7 +35,7 @@ export default async function DiscoverVentureDetailPage({ params }: { params: Pr
     <div className="px-gutter py-space-lg">
       <div className="max-w-4xl mx-auto space-y-space-xl">
         <Link href="/discover/ventures" className="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-navy-deep transition-colors">
-          <span className="material-symbols-outlined text-[18px]">arrow_back</span> Back to Discover
+          <MaterialSymbol icon="arrow_back" className="text-[18px]" /> Back to Discover
         </Link>
 
         {/* Hero card */}
@@ -43,7 +44,7 @@ export default async function DiscoverVentureDetailPage({ params }: { params: Pr
           <div className="p-space-xl -mt-6">
             <div className="flex items-start gap-space-lg flex-wrap">
               <div className="w-16 h-16 rounded-2xl bg-navy-deep flex items-center justify-center shadow-lg flex-shrink-0">
-                <span className="material-symbols-outlined text-on-primary text-[28px]">rocket_launch</span>
+                <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[28px]" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between flex-wrap gap-3">
@@ -72,14 +73,14 @@ export default async function DiscoverVentureDetailPage({ params }: { params: Pr
                   href={`/invitations/new?ventureId=${ventureId}`}
                   className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all"
                 >
-                  <span className="material-symbols-outlined text-[18px]">send</span>
+                  <MaterialSymbol icon="send" className="text-[18px]" />
                   Express Interest
                 </Link>
                 <Link
                   href={`/messages?start=${venture.ownerId}`}
                   className="inline-flex items-center gap-2 h-11 px-4 rounded-xl border-2 border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md transition-all"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-teal-accent">chat</span>
+                  <MaterialSymbol icon="chat" className="text-[18px] text-teal-accent" />
                   Message Founder
                 </Link>
               </div>
@@ -87,7 +88,7 @@ export default async function DiscoverVentureDetailPage({ params }: { params: Pr
             {isOwner && (
               <div className="mt-space-lg pt-space-lg border-t border-surface-container-high">
                 <Link href={`/ventures/${venture.id}`} className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md transition-all hover:bg-surface-container-high">
-                  <span className="material-symbols-outlined text-[18px] text-teal-accent">settings</span>
+                  <MaterialSymbol icon="settings" className="text-[18px] text-teal-accent" />
                   Manage Venture
                 </Link>
               </div>
@@ -101,7 +102,7 @@ export default async function DiscoverVentureDetailPage({ params }: { params: Pr
             {venture.problem && (
               <div className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
                 <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-3">
-                  <span className="material-symbols-outlined text-[18px] text-teal-accent">search</span>
+                  <MaterialSymbol icon="search" className="text-[18px] text-teal-accent" />
                   Problem
                 </h2>
                 <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{venture.problem}</p>
@@ -110,7 +111,7 @@ export default async function DiscoverVentureDetailPage({ params }: { params: Pr
             {venture.solution && (
               <div className="bg-surface-pure rounded-2xl shadow-sm p-space-lg">
                 <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-3">
-                  <span className="material-symbols-outlined text-[18px] text-teal-accent">lightbulb</span>
+                  <MaterialSymbol icon="lightbulb" className="text-[18px] text-teal-accent" />
                   Solution
                 </h2>
                 <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{venture.solution}</p>

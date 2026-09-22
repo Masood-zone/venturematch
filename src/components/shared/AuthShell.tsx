@@ -1,3 +1,4 @@
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface AuthShellProps {
   children: React.ReactNode;
   subtitle?: string;
@@ -10,7 +11,7 @@ export function AuthShell({ children, subtitle = "Onboarding" }: AuthShellProps)
       <div className="w-full py-space-md px-gutter flex justify-center items-center">
         <div className="flex items-center gap-space-sm">
           <div className="w-7 h-7 rounded-lg bg-navy-deep flex items-center justify-center">
-            <span className="material-symbols-outlined text-on-primary text-[16px]">rocket_launch</span>
+            <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[16px]" />
           </div>
           <span className="font-title-md text-title-md text-navy-deep">VentureMatch</span>
           <span className="font-label-sm text-label-sm text-teal-accent uppercase tracking-wider font-bold">{subtitle}</span>

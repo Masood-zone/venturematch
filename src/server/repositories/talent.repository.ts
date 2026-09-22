@@ -97,7 +97,7 @@ export const talentRepository = {
     return db.founderPreference.upsert({
       where: { studentProfileId },
       update: data as never,
-      create: { studentProfileId, commitmentLevel: (data as any).commitmentLevel, preferredRoleCategory: (data as any).preferredRoleCategory, ventureGoal: (data as any).ventureGoal, structuredVsFlexible: (data as any).structuredVsFlexible, independentVsCollaborative: (data as any).independentVsCollaborative, fastVsDeliberate: (data as any).fastVsDeliberate } as any,
+      create: { studentProfileId, ...data } as never,
     });
   },
 

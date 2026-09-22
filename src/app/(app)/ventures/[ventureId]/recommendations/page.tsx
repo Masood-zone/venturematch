@@ -6,6 +6,7 @@ import { MatchScoreBadge } from "@/components/shared/MatchScoreBadge";
 import { Avatar } from "@/components/ui/avatar";
 import { EmptyState } from "@/components/shared/EmptyState";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 type Recommendation = {
   id: string;
   overallScore: number;
@@ -51,7 +52,7 @@ export default function VentureRecommendationsPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
           <div className="flex items-center gap-3">
             <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-              <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+              <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
             </Link>
             <div>
               <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Match Recommendations</h1>
@@ -63,13 +64,13 @@ export default function VentureRecommendationsPage() {
             disabled={running}
             className="inline-flex items-center gap-2 h-11 px-5 bg-teal-accent hover:bg-secondary text-on-primary font-label-md text-label-md rounded-xl shadow-sm transition-all disabled:opacity-60 self-start"
           >
-            {running ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : <><span className="material-symbols-outlined text-[18px]">auto_awesome</span>Run Matching</>}
+            {running ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : <><MaterialSymbol icon="auto_awesome" className="text-[18px]" />Run Matching</>}
           </button>
         </div>
 
         {generated !== null && (
           <div className="p-space-md rounded-xl bg-secondary-container/30 flex items-center gap-2">
-            <span className="material-symbols-outlined text-[18px] text-teal-accent">check_circle</span>
+            <MaterialSymbol icon="check_circle" className="text-[18px] text-teal-accent" />
             <span className="font-body-md text-body-md text-on-surface">{generated} new recommendations generated.</span>
           </div>
         )}
@@ -89,7 +90,7 @@ export default function VentureRecommendationsPage() {
 
         {loading ? (
           <div className="flex justify-center py-16">
-            <span className="material-symbols-outlined text-[40px] text-teal-accent animate-spin">progress_activity</span>
+            <MaterialSymbol icon="progress_activity" className="text-[40px] text-teal-accent animate-spin" />
           </div>
         ) : recs.length === 0 ? (
           <EmptyState
@@ -98,7 +99,7 @@ export default function VentureRecommendationsPage() {
             description="Run the matching algorithm to find students whose capabilities complement your venture's gaps."
             action={
               <button onClick={runMatching} disabled={running} className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm transition-all">
-                <span className="material-symbols-outlined text-[18px]">auto_awesome</span> Run Matching
+                <MaterialSymbol icon="auto_awesome" className="text-[18px]" /> Run Matching
               </button>
             }
           />
@@ -128,7 +129,7 @@ export default function VentureRecommendationsPage() {
                       href={`/invitations/new?ventureId=${ventureId}&recipientId=${rec.candidateUserId}&recommendationId=${rec.id}`}
                       className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl bg-navy-deep text-on-primary font-label-sm text-label-sm shadow-sm hover:bg-on-primary-fixed transition-all"
                     >
-                      <span className="material-symbols-outlined text-[16px]">send</span>
+                      <MaterialSymbol icon="send" className="text-[16px]" />
                       Invite
                     </Link>
                     <Link

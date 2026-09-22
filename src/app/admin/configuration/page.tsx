@@ -2,6 +2,7 @@ import { adminRepository } from "@/server/repositories/admin.repository";
 import { matchingRepository } from "@/server/repositories/matching.repository";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Configuration — Admin" };
 
 export default async function AdminConfigurationPage() {
@@ -46,7 +47,7 @@ export default async function AdminConfigurationPage() {
         )}
         <div className="flex gap-2">
           <Link href="/api/v1/admin/matching/configs" className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-navy-deep text-on-primary font-label-md text-label-md shadow-sm hover:bg-on-primary-fixed transition-all">
-            <span className="material-symbols-outlined text-[18px]">add</span>
+            <MaterialSymbol icon="add" className="text-[18px]" />
             Create New Config
           </Link>
         </div>

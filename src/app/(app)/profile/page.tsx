@@ -8,6 +8,7 @@ import { CapabilityChip } from "@/components/shared/CapabilityChip";
 import { Badge } from "@/components/ui/badge";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "My Profile" };
 
 export default async function ProfilePage() {
@@ -51,7 +52,7 @@ export default async function ProfilePage() {
             href="/profile/edit"
             className="inline-flex items-center gap-2 h-10 px-4 rounded-xl border-2 border-outline-variant bg-surface-pure text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-all self-start"
           >
-            <span className="material-symbols-outlined text-[18px]">edit</span>
+            <MaterialSymbol icon="edit" className="text-[18px]" />
             Edit Profile
           </Link>
         </div>
@@ -77,7 +78,7 @@ export default async function ProfilePage() {
           <div className="p-space-lg rounded-2xl bg-surface-pure shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-teal-accent">school</span>
+                <MaterialSymbol icon="school" className="text-[18px] text-teal-accent" />
                 Academic Background
               </h2>
             </div>
@@ -104,7 +105,7 @@ export default async function ProfilePage() {
           {/* Preferences */}
           <div className="p-space-lg rounded-2xl bg-surface-pure shadow-sm">
             <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-4">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">tune</span>
+              <MaterialSymbol icon="tune" className="text-[18px] text-teal-accent" />
               Preferences
             </h2>
             {founderPreference ? (
@@ -136,7 +137,7 @@ export default async function ProfilePage() {
         <div className="p-space-lg rounded-2xl bg-surface-pure shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px] text-teal-accent">psychology</span>
+              <MaterialSymbol icon="psychology" className="text-[18px] text-teal-accent" />
               Capabilities ({capabilities.length})
             </h2>
             <Link href="/profile/edit" className="font-label-md text-label-md text-teal-accent hover:underline">Manage</Link>
@@ -160,7 +161,7 @@ export default async function ProfilePage() {
         {/* Sector interests */}
         <div className="p-space-lg rounded-2xl bg-surface-pure shadow-sm">
           <h2 className="font-title-md text-title-md text-navy-deep font-semibold flex items-center gap-2 mb-4">
-            <span className="material-symbols-outlined text-[18px] text-teal-accent">explore</span>
+            <MaterialSymbol icon="explore" className="text-[18px] text-teal-accent" />
             Venture Interests ({ventureInterests.length})
           </h2>
           {ventureInterests.length === 0 ? (

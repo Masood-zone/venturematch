@@ -179,11 +179,15 @@ export const venturesRepository = {
   }) {
     return db.ventureMember.upsert({
       where: { ventureId_userId: { ventureId, userId } },
-      update: { status: "ACTIVE" as never, roleTitle: (data as any).roleTitle, membershipType: (data as any).membershipType } as never,
+      update: {
+        status: "ACTIVE",
+        roleTitle: data.roleTitle,
+        membershipType: (data.membershipType as "FOUNDER" | "CO_FOUNDER" | "TEAM_MEMBER" | "SPECIALIST") ?? "TEAM_MEMBER",
+      },
       create: {
         ventureId,
         userId,
-        membershipType: (data.membershipType as never) ?? "TEAM_MEMBER",
+        membershipType: (data.membershipType as "FOUNDER" | "CO_FOUNDER" | "TEAM_MEMBER" | "SPECIALIST") ?? "TEAM_MEMBER",
         status: "ACTIVE",
         roleTitle: data.roleTitle,
       },
@@ -226,7 +230,16 @@ export const venturesRepository = {
     expectedOutcome?: string;
     dueAt?: Date;
   }) {
-    return db.ventureMilestone.create({ data: { ventureId: data.ventureId, stage: data.stage as any, title: data.title, objective: data.objective, expectedOutcome: data.expectedOutcome, dueAt: data.dueAt } });
+    return db.ventureMilestone.create({
+      data: {
+        ventureId: data.ventureId,
+        stage: data.stage as "IDEA" | "VALIDATION" | "PROTOTYPE" | "EARLY_LAUNCH" | "OPERATE",
+        title: data.title,
+        objective: data.objective,
+        expectedOutcome: data.expectedOutcome,
+        dueAt: data.dueAt,
+      },
+    });
   },
 
   async updateMilestone(id: string, data: Partial<{
@@ -304,7 +317,7 @@ export const venturesRepository = {
     return db.teamCharter.upsert({
       where: { ventureId },
       update: data as never,
-      create: { ventureId, meetingFrequency: (data as any).meetingFrequency, communicationMethod: (data as any).communicationMethod, decisionMethod: (data as any).decisionMethod, expectationsText: (data as any).expectationsText, status: (data as any).status } as any,
+      create: { ventureId, ...data } as never,
     });
   },
 

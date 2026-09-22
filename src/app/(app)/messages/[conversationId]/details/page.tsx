@@ -2,9 +2,11 @@ import { getServerSession } from "@/server/permissions";
 import { messagingRepository } from "@/server/repositories/messaging.repository";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Avatar } from "@/components/ui/avatar";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Conversation Details" };
 
 export default async function ConversationDetailsPage({ params }: { params: Promise<{ conversationId: string }> }) {
@@ -24,7 +26,7 @@ export default async function ConversationDetailsPage({ params }: { params: Prom
       <div className="max-w-2xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/messages/${conversationId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Conversation Details</h1>
         </div>
@@ -57,12 +59,12 @@ export default async function ConversationDetailsPage({ params }: { params: Prom
             <Link href={`/ventures/${convo.venture.id}`} className="flex items-center gap-3 p-3 rounded-xl bg-surface-subtle hover:bg-surface-container transition-colors group">
               <div className="w-10 h-10 rounded-xl bg-navy-deep flex items-center justify-center">
                 {convo.venture.logoUrl
-                  ? <img src={convo.venture.logoUrl} alt="" className="w-full h-full object-cover rounded-xl" />
-                  : <span className="material-symbols-outlined text-on-primary text-[18px]">rocket_launch</span>
+                  ? <Image src={convo.venture.logoUrl} alt="" width={40} height={40} className="object-cover rounded-xl" unoptimized />
+                  : <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[18px]" />
                 }
               </div>
               <span className="font-label-md text-label-md text-navy-deep group-hover:text-teal-accent transition-colors font-semibold">{convo.venture.name}</span>
-              <span className="material-symbols-outlined text-[18px] text-on-surface-variant ml-auto">chevron_right</span>
+              <MaterialSymbol icon="chevron_right" className="text-[18px] text-on-surface-variant ml-auto" />
             </Link>
           </div>
         )}
@@ -73,9 +75,9 @@ export default async function ConversationDetailsPage({ params }: { params: Prom
           <div className="space-y-2">
             {other.map(p => (
               <Link key={p.userId} href={`/students/${p.userId}`} className="flex items-center gap-3 p-3 rounded-xl hover:bg-surface-subtle transition-colors group">
-                <span className="material-symbols-outlined text-[20px] text-teal-accent">person</span>
+                <MaterialSymbol icon="person" className="text-[20px] text-teal-accent" />
                 <span className="font-label-md text-label-md text-navy-deep group-hover:text-teal-accent transition-colors">View {p.user.name}&apos;s Profile</span>
-                <span className="material-symbols-outlined text-[18px] text-on-surface-variant ml-auto">chevron_right</span>
+                <MaterialSymbol icon="chevron_right" className="text-[18px] text-on-surface-variant ml-auto" />
               </Link>
             ))}
           </div>

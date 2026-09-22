@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PublicHeader } from "@/components/shared/PublicHeader";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export default function LandingPage() {
   const capabilities = [
     { icon: "checkroom", label: "Fashion & Textiles", sub: "Circular Materials", tag: "Fashion Tech", campus: "USTED Tanoso", color: "text-teal-accent" },
@@ -45,13 +46,13 @@ export default function LandingPage() {
                       className="inline-flex items-center justify-center bg-navy-deep hover:bg-primary text-on-primary font-label-md text-label-md rounded-xl px-7 py-3.5 shadow-md hover:shadow-xl transition-all transform hover:-translate-y-0.5 gap-2"
                     >
                       <span>Find My Co-Founder</span>
-                      <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                      <MaterialSymbol icon="arrow_forward" className="text-[18px]" />
                     </Link>
                     <Link
                       href="/discover"
                       className="inline-flex items-center justify-center bg-surface-pure hover:bg-surface-container text-teal-accent font-label-md text-label-md rounded-xl px-7 py-3.5 shadow-sm hover:shadow-md transition-all gap-2"
                     >
-                      <span className="material-symbols-outlined text-[18px]">explore</span>
+                      <MaterialSymbol icon="explore" className="text-[18px]" />
                       <span>Explore Ventures</span>
                     </Link>
                   </div>
@@ -66,9 +67,9 @@ export default function LandingPage() {
                     <div className="flex flex-col">
                       <div className="flex items-center text-amber-warm">
                         {[1,2,3,4].map(i => (
-                          <span key={i} className="material-symbols-outlined text-[16px]" style={{fontVariationSettings:"'FILL' 1"}}>star</span>
+                          <MaterialSymbol key={i} icon="star" className="text-[16px]" filled />
                         ))}
-                        <span className="material-symbols-outlined text-[16px]" style={{fontVariationSettings:"'FILL' 1"}}>star_half</span>
+                        <MaterialSymbol icon="star_half" className="text-[16px]" style={{fontVariationSettings:"'FILL' 1"}} />
                         <span className="font-title-md text-navy-deep text-label-md ml-1.5 font-bold">94%</span>
                       </div>
                       <span className="font-label-sm text-label-sm text-on-surface-variant">Successful 7-day Founder Trial conversion</span>
@@ -91,7 +92,7 @@ export default function LandingPage() {
                         <div key={cap.label} className="bg-surface-subtle p-3.5 rounded-xl flex flex-col justify-between hover:bg-surface-container transition-colors">
                           <div className="flex items-center justify-between mb-2">
                             <span className={`w-7 h-7 rounded-lg bg-surface-pure flex items-center justify-center shadow-sm ${cap.color}`}>
-                              <span className="material-symbols-outlined text-[18px]">{cap.icon}</span>
+                              <MaterialSymbol icon={cap.icon} className="text-[18px]" />
                             </span>
                             <span className={`font-label-sm text-label-sm font-bold ${cap.color}`}>{cap.campus}</span>
                           </div>
@@ -137,7 +138,7 @@ export default function LandingPage() {
                     <div className="flex items-center gap-3">
                       <span className="font-label-sm text-label-sm text-teal-accent font-bold">{s.step}</span>
                       <div className="w-10 h-10 rounded-xl bg-surface-pure flex items-center justify-center shadow-sm">
-                        <span className="material-symbols-outlined text-[20px] text-navy-deep">{s.icon}</span>
+                        <MaterialSymbol icon={s.icon} className="text-[20px] text-navy-deep" />
                       </div>
                     </div>
                     <h3 className="font-headline-sm text-headline-sm text-navy-deep font-bold">{s.title}</h3>
@@ -162,7 +163,7 @@ export default function LandingPage() {
                 className="inline-flex items-center justify-center bg-teal-accent hover:bg-secondary text-on-primary font-label-md text-label-md rounded-xl px-8 py-4 shadow-lg transition-all gap-2 text-[15px]"
               >
                 <span>Create Free Account</span>
-                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                <MaterialSymbol icon="arrow_forward" className="text-[18px]" />
               </Link>
             </div>
           </section>
@@ -172,7 +173,7 @@ export default function LandingPage() {
             <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-space-sm">
                 <div className="w-7 h-7 rounded-lg bg-navy-deep flex items-center justify-center">
-                  <span className="material-symbols-outlined text-on-primary text-[14px]">rocket_launch</span>
+                  <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[14px]" />
                 </div>
                 <span className="font-title-md text-title-md text-navy-deep font-bold">VentureMatch</span>
               </div>

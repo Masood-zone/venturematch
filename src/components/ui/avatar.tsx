@@ -1,8 +1,10 @@
 import { cn } from "@/lib/utils";
 import { getInitials } from "@/lib/utils";
+import Image from "next/image";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface AvatarProps {
-  name?: string;
+  name?: string | null;
   image?: string | null;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   online?: boolean;
@@ -22,10 +24,10 @@ export function Avatar({ name, image, size = "md", online, className }: AvatarPr
     <div className={cn("relative flex-shrink-0", className)}>
       <div className={cn("rounded-full bg-navy-deep flex items-center justify-center overflow-hidden", sizeMap[size])}>
         {image ? (
-          <img src={image} alt={name ?? ""} className="w-full h-full object-cover" />
+          <Image src={image} alt={name ?? ""} width={48} height={48} className="object-cover" unoptimized />
         ) : (
           <span className="text-on-primary font-semibold">
-            {name ? getInitials(name) : <span className="material-symbols-outlined text-[16px]">person</span>}
+            {name ? getInitials(name) : <MaterialSymbol icon="person" className="text-[16px]" />}
           </span>
         )}
       </div>

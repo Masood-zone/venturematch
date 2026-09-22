@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Discover" };
 
 export default function DiscoverPage() {
@@ -18,7 +19,7 @@ export default function DiscoverPage() {
             className="group p-space-xl rounded-2xl bg-surface-pure shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col gap-4"
           >
             <div className="w-14 h-14 rounded-2xl bg-secondary-container flex items-center justify-center">
-              <span className="material-symbols-outlined text-[28px] text-on-secondary-container">person_search</span>
+              <MaterialSymbol icon="person_search" className="text-[28px] text-on-secondary-container" />
             </div>
             <div>
               <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold group-hover:text-teal-accent transition-colors">Discover People</h2>
@@ -28,7 +29,7 @@ export default function DiscoverPage() {
             </div>
             <div className="flex items-center gap-2 mt-auto">
               <span className="font-label-md text-label-md text-teal-accent font-semibold">Browse Talent</span>
-              <span className="material-symbols-outlined text-[18px] text-teal-accent group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              <MaterialSymbol icon="arrow_forward" className="text-[18px] text-teal-accent group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>
 
@@ -37,7 +38,7 @@ export default function DiscoverPage() {
             className="group p-space-xl rounded-2xl bg-surface-pure shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col gap-4"
           >
             <div className="w-14 h-14 rounded-2xl bg-primary-container flex items-center justify-center">
-              <span className="material-symbols-outlined text-[28px] text-on-primary">rocket_launch</span>
+              <MaterialSymbol icon="rocket_launch" className="text-[28px] text-on-primary" />
             </div>
             <div>
               <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold group-hover:text-teal-accent transition-colors">Discover Ventures</h2>
@@ -47,7 +48,7 @@ export default function DiscoverPage() {
             </div>
             <div className="flex items-center gap-2 mt-auto">
               <span className="font-label-md text-label-md text-teal-accent font-semibold">Browse Ventures</span>
-              <span className="material-symbols-outlined text-[18px] text-teal-accent group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              <MaterialSymbol icon="arrow_forward" className="text-[18px] text-teal-accent group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>
         </div>

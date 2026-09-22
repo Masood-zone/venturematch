@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
 import { type ButtonHTMLAttributes, forwardRef } from "react";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost" | "danger" | "outline";
   size?: "sm" | "md" | "lg";
@@ -40,7 +41,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading && (
-          <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>
+          <MaterialSymbol icon="progress_activity" className="text-[16px] animate-spin" />
         )}
         {children}
       </Comp>

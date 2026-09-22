@@ -4,20 +4,39 @@ import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import { CapabilityChip } from "@/components/shared/CapabilityChip";
 import type { Metadata } from "next";
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "User Detail — Admin" };
+
+type AdminUserDetail = {
+  id: string;
+  name: string | null;
+  email: string | null;
+  emailVerified: Date | null;
+  createdAt: Date;
+  role: string;
+  studentProfile?: {
+    onboardingCompleted?: boolean | null;
+    capabilities: Array<{
+      id: string;
+      proficiency: number;
+      capability: { name: string };
+    }>;
+  } | null;
+  ownedVentures: Array<{ id: string; name: string; status: string }>;
+};
 
 export default async function AdminUserDetailPage({ params }: { params: Promise<{ userId: string }> }) {
   const { userId } = await params;
   const result = await adminService.getUserDetail(userId);
   if (!result.success) notFound();
-  const user = result.data as any;
+  const user = result.data as AdminUserDetail;
   const profile = user?.studentProfile;
 
   return (
     <div className="space-y-6 max-w-4xl">
       <div className="flex items-center gap-3">
         <Link href="/admin/users" className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-          <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+          <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
         </Link>
         <div>
           <h1 className="font-headline-lg text-headline-lg text-navy-deep">{user.name}</h1>
@@ -74,7 +93,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
           <div className="space-y-2">
             {user.ownedVentures.map(v => (
               <Link key={v.id} href={`/admin/ventures/${v.id}`} className="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-subtle transition-colors">
-                <span className="material-symbols-outlined text-[16px] text-teal-accent">rocket_launch</span>
+                <MaterialSymbol icon="rocket_launch" className="text-[16px] text-teal-accent" />
                 <span className="font-label-md text-label-md text-navy-deep">{v.name}</span>
                 <span className="ml-auto font-label-sm text-label-sm text-on-surface-variant">{v.status}</span>
               </Link>

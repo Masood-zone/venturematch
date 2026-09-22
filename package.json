@@ -12,6 +12,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^4.0.71",
     "@hookform/resolvers": "^5.9.1",
+    "@prisma/adapter-mariadb": "^7.10.0",
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "@radix-ui/react-accordion": "^1.2.20",
@@ -61,6 +62,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   },
   "allowScripts": {

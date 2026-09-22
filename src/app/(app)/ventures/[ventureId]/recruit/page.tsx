@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { MatchScoreBadge } from "@/components/shared/MatchScoreBadge";
-import { CapabilityChip } from "@/components/shared/CapabilityChip";
 import { EmptyState } from "@/components/shared/EmptyState";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Recruit" };
 
 export default async function VentureRecruitPage({ params }: { params: Promise<{ ventureId: string }> }) {
@@ -24,7 +24,7 @@ export default async function VentureRecruitPage({ params }: { params: Promise<{
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
           <div className="flex items-center gap-3">
             <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-              <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+              <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
             </Link>
             <div>
               <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Recruit</h1>
@@ -36,14 +36,14 @@ export default async function VentureRecruitPage({ params }: { params: Promise<{
               href={`/ventures/${ventureId}/recommendations`}
               className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-teal-accent text-on-primary font-label-md text-label-md shadow-sm hover:bg-secondary transition-all"
             >
-              <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
+              <MaterialSymbol icon="auto_awesome" className="text-[18px]" />
               Run Matching
             </Link>
             <Link
               href={`/invitations/new?ventureId=${ventureId}`}
               className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-navy-deep text-on-primary font-label-md text-label-md shadow-sm hover:bg-on-primary-fixed transition-all"
             >
-              <span className="material-symbols-outlined text-[18px]">send</span>
+              <MaterialSymbol icon="send" className="text-[18px]" />
               Direct Invite
             </Link>
           </div>
@@ -80,7 +80,7 @@ export default async function VentureRecruitPage({ params }: { params: Promise<{
             description="Run the matching algorithm first to generate co-founder recommendations based on your capability gaps."
             action={
               <Link href={`/ventures/${ventureId}/recommendations`} className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm">
-                <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
+                <MaterialSymbol icon="auto_awesome" className="text-[18px]" />
                 Run Matching
               </Link>
             }
@@ -102,7 +102,7 @@ export default async function VentureRecruitPage({ params }: { params: Promise<{
                         href={`/invitations/new?ventureId=${ventureId}&recipientId=${rec.candidateUserId}&recommendationId=${rec.id}`}
                         className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl bg-navy-deep text-on-primary font-label-sm text-label-sm shadow-sm hover:bg-on-primary-fixed transition-all"
                       >
-                        <span className="material-symbols-outlined text-[16px]">send</span>
+                        <MaterialSymbol icon="send" className="text-[16px]" />
                         Invite
                       </Link>
                       <Link

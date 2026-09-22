@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { type SelectHTMLAttributes, forwardRef } from "react";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
@@ -29,9 +30,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           >
             {children}
           </select>
-          <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">
-            expand_more
-          </span>
+          <MaterialSymbol icon="expand_more" className="absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" />
         </div>
         {error && <p className="font-body-md text-body-md text-error">{error}</p>}
       </div>

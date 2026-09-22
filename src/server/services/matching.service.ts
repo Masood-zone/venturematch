@@ -1,6 +1,5 @@
 import { matchingRepository } from "@/server/repositories/matching.repository";
 import { venturesRepository } from "@/server/repositories/ventures.repository";
-import { talentRepository } from "@/server/repositories/talent.repository";
 import { calculateMatchScore } from "@/server/matching/calculate-match";
 import { DEFAULT_WEIGHTS, ALGORITHM_VERSION, type CandidateProfile, type VentureProfile } from "@/server/matching/types";
 import { ok, err, type ServiceResult } from "@/lib/errors";

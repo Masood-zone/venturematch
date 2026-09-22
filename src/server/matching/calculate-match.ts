@@ -71,7 +71,7 @@ export function scoreGoal(candidate: CandidateProfile, venture: VentureProfile):
 }
 
 // Factor W: Working Style Compatibility (5%)
-export function scoreWorkingStyle(candidate: CandidateProfile, _venture: VentureProfile): number {
+export function scoreWorkingStyle(candidate: CandidateProfile): number {
   // Without venture-level prefs, score based on reasonable defaults
   const sv = Math.abs(candidate.structuredVsFlexible - 3);
   const ic = Math.abs(candidate.independentVsCollaborative - 3);
@@ -107,7 +107,7 @@ export function calculateMatchScore(
     commitment:   clampScore(scoreCommitment(candidate, venture)),
     availability: clampScore(scoreAvailability(candidate, venture)),
     goal:         clampScore(scoreGoal(candidate, venture)),
-    workingStyle: clampScore(scoreWorkingStyle(candidate, venture)),
+    workingStyle: clampScore(scoreWorkingStyle(candidate)),
     evidence:     clampScore(scoreEvidence(candidate, venture)),
   };
 

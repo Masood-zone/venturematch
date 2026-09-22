@@ -4,6 +4,7 @@ import { formatRelativeTime } from "@/lib/utils";
 import { EmptyState } from "@/components/shared/EmptyState";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Notifications" };
 
 const NOTIFICATION_ICONS: Record<string, string> = {
@@ -40,7 +41,7 @@ export default async function NotificationsPage() {
                 type="submit"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md transition-all"
               >
-                <span className="material-symbols-outlined text-[18px] text-teal-accent">done_all</span>
+                <MaterialSymbol icon="done_all" className="text-[18px] text-teal-accent" />
                 Mark all read
               </button>
             </form>
@@ -61,9 +62,7 @@ export default async function NotificationsPage() {
                 className={`flex items-start gap-4 p-space-md rounded-2xl shadow-sm transition-all ${!n.readAt ? "bg-secondary-container/20 border border-secondary-container/40" : "bg-surface-pure"}`}
               >
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${!n.readAt ? "bg-secondary-container" : "bg-surface-container-high"}`}>
-                  <span className="material-symbols-outlined text-[18px] text-on-secondary-container">
-                    {NOTIFICATION_ICONS[n.type] ?? "notifications"}
-                  </span>
+                  <MaterialSymbol icon={NOTIFICATION_ICONS[n.type] ?? "notifications"} className="text-[18px] text-on-secondary-container" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-title-md text-title-md text-navy-deep font-semibold">{n.title}</p>

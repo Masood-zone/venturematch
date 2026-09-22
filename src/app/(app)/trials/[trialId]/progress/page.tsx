@@ -5,6 +5,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Trial Progress" };
 
 export default async function TrialProgressPage({ params }: { params: Promise<{ trialId: string }> }) {
@@ -21,7 +22,7 @@ export default async function TrialProgressPage({ params }: { params: Promise<{ 
       <div className="max-w-3xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/trials/${trialId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Trial Progress</h1>

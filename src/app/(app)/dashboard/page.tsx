@@ -7,6 +7,7 @@ import { MatchScoreBadge } from "@/components/shared/MatchScoreBadge";
 import { Avatar } from "@/components/ui/avatar";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function DashboardPage() {
@@ -19,7 +20,13 @@ export default async function DashboardPage() {
     db.matchRecommendation.count({ where: { candidateUserId: userId, status: "ACTIVE" } }),
     db.venture.findMany({
       where: { ownerId: userId, status: { not: "ARCHIVED" } },
-      include: { primarySector: true, members: { where: { status: "ACTIVE" } } },
+      include: {
+        primarySector: true,
+        members: {
+          where: { status: "ACTIVE" },
+          include: { user: { select: { id: true, name: true, image: true } } },
+        },
+      },
       orderBy: { updatedAt: "desc" },
       take: 3,
     }),
@@ -66,14 +73,14 @@ export default async function DashboardPage() {
           </div>
           <div className="flex items-center gap-space-md self-start md:self-auto">
             <Link href="/notifications" className="relative p-2.5 rounded-xl bg-surface-pure hover:bg-surface-container shadow-sm text-navy-deep transition-all">
-              <span className="material-symbols-outlined text-[22px]">notifications</span>
+              <MaterialSymbol icon="notifications" className="text-[22px]" />
               {unreadCount > 0 && <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-warm ring-2 ring-surface-pure" />}
             </Link>
             <Link
               href="/ventures/new"
               className="flex items-center gap-space-xs px-space-lg py-3 rounded-xl bg-navy-deep text-on-primary font-label-md text-label-md shadow-sm hover:bg-on-primary-fixed transition-all"
             >
-              <span className="material-symbols-outlined text-[18px]">add</span>
+              <MaterialSymbol icon="add" className="text-[18px]" />
               <span>Start a Venture</span>
             </Link>
           </div>
@@ -93,7 +100,7 @@ export default async function DashboardPage() {
                 <p className={`font-display-lg text-display-lg font-bold mt-1 ${m.label === "Invitations" ? "text-teal-accent" : "text-navy-deep"}`}>{m.value}</p>
               </div>
               <div className={`w-12 h-12 rounded-xl ${m.bg} flex items-center justify-center ${m.color}`}>
-                <span className="material-symbols-outlined text-[24px]">{m.icon}</span>
+                <MaterialSymbol icon={m.icon} className="text-[24px]" />
               </div>
             </div>
           ))}
@@ -123,7 +130,7 @@ export default async function DashboardPage() {
                         <p className="font-body-md text-body-md text-on-surface-variant truncate">from {inv.sender.name}</p>
                       </div>
                       <span className="px-2.5 py-0.5 rounded-full bg-amber-warm/20 text-amber-warm font-label-sm text-label-sm font-semibold">Pending</span>
-                      <span className="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors">chevron_right</span>
+                      <MaterialSymbol icon="chevron_right" className="text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors" />
                     </Link>
                   ))}
                 </div>
@@ -148,7 +155,7 @@ export default async function DashboardPage() {
                       className="flex items-center gap-space-md p-space-lg rounded-2xl bg-surface-pure shadow-sm hover:shadow-md transition-all group"
                     >
                       <div className="w-12 h-12 rounded-2xl bg-navy-deep/10 flex items-center justify-center flex-shrink-0">
-                        <span className="material-symbols-outlined text-[22px] text-navy-deep">rocket_launch</span>
+                        <MaterialSymbol icon="rocket_launch" className="text-[22px] text-navy-deep" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-title-md text-title-md text-navy-deep truncate group-hover:text-teal-accent transition-colors">{rec.venture.name}</p>
@@ -160,7 +167,7 @@ export default async function DashboardPage() {
                         </div>
                       </div>
                       <MatchScoreBadge score={rec.overallScore} size="md" />
-                      <span className="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors">chevron_right</span>
+                      <MaterialSymbol icon="chevron_right" className="text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors" />
                     </Link>
                   ))}
                 </div>
@@ -183,7 +190,7 @@ export default async function DashboardPage() {
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div className="w-10 h-10 rounded-xl bg-navy-deep flex items-center justify-center">
-                          <span className="material-symbols-outlined text-on-primary text-[18px]">rocket_launch</span>
+                          <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[18px]" />
                         </div>
                         <VentureStageBadge stage={v.stage} />
                       </div>
@@ -195,7 +202,7 @@ export default async function DashboardPage() {
                         <div className="flex -space-x-1.5">
                           {v.members.slice(0, 3).map(m => (
                             <div key={m.userId} className="w-6 h-6 rounded-full bg-surface-container-high ring-2 ring-surface-pure flex items-center justify-center">
-                              <span className="font-label-sm text-label-sm text-[10px] text-on-surface-variant">{(m as any).user?.name?.[0]}</span>
+                              <span className="font-label-sm text-label-sm text-[10px] text-on-surface-variant">{m.user?.name?.[0]}</span>
                             </div>
                           ))}
                         </div>
@@ -216,7 +223,7 @@ export default async function DashboardPage() {
             </div>
             {recentNotifications.length === 0 ? (
               <div className="p-space-lg rounded-2xl bg-surface-pure shadow-sm text-center">
-                <span className="material-symbols-outlined text-[32px] text-on-surface-variant block mb-2">notifications_none</span>
+                <MaterialSymbol icon="notifications_none" className="text-[32px] text-on-surface-variant block mb-2" />
                 <p className="font-body-md text-body-md text-on-surface-variant">All caught up!</p>
               </div>
             ) : (
@@ -224,9 +231,7 @@ export default async function DashboardPage() {
                 {recentNotifications.map(n => (
                   <div key={n.id} className="flex items-start gap-3 p-space-md rounded-2xl bg-surface-pure shadow-sm">
                     <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
-                      <span className="material-symbols-outlined text-[16px] text-on-secondary-container">
-                        {n.type === "NEW_MESSAGE" ? "chat" : n.type === "INVITATION_RECEIVED" ? "mail" : "notifications"}
-                      </span>
+                      <MaterialSymbol icon={n.type === "NEW_MESSAGE" ? "chat" : n.type === "INVITATION_RECEIVED" ? "mail" : "notifications"} className="text-[16px] text-on-secondary-container" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-label-md text-label-md text-navy-deep font-semibold truncate">{n.title}</p>
@@ -248,9 +253,9 @@ export default async function DashboardPage() {
                   { label: "My Matches", icon: "auto_awesome", href: "/matches" },
                 ].map(a => (
                   <Link key={a.label} href={a.href} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/10 transition-colors">
-                    <span className="material-symbols-outlined text-[18px] text-teal-accent">{a.icon}</span>
+                    <MaterialSymbol icon={a.icon} className="text-[18px] text-teal-accent" />
                     <span className="font-label-md text-label-md">{a.label}</span>
-                    <span className="material-symbols-outlined text-[16px] text-white/40 ml-auto">chevron_right</span>
+                    <MaterialSymbol icon="chevron_right" className="text-[16px] text-white/40 ml-auto" />
                   </Link>
                 ))}
               </div>

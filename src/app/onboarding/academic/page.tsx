@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { OnboardingProgress } from "@/components/shared/OnboardingProgress";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 const FACULTIES = ["Engineering", "Science", "Business", "Arts & Humanities", "Social Sciences", "Law", "Medicine", "Education", "Agriculture", "Computing & IT"];
 const LEVELS = [
   { value: "100", label: "Level 100" },
@@ -63,13 +64,13 @@ export default function AcademicPage() {
             </p>
           </div>
           <div className="w-12 h-12 rounded-xl bg-surface-subtle flex items-center justify-center flex-shrink-0">
-            <span className="material-symbols-outlined text-[24px] text-teal-accent">school</span>
+            <MaterialSymbol icon="school" className="text-[24px] text-teal-accent" />
           </div>
         </div>
 
         {error && (
           <div className="mb-space-md p-3 rounded-lg bg-error-container flex items-center gap-2">
-            <span className="material-symbols-outlined text-on-error-container text-[18px]">error</span>
+            <MaterialSymbol icon="error" className="text-on-error-container text-[18px]" />
             <p className="font-body-md text-body-md text-on-error-container">{error}</p>
           </div>
         )}
@@ -89,7 +90,7 @@ export default function AcademicPage() {
                 <option value="">Select your faculty</option>
                 {FACULTIES.map(f => <option key={f} value={f}>{f}</option>)}
               </select>
-              <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">expand_more</span>
+              <MaterialSymbol icon="expand_more" className="absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" />
             </div>
           </div>
 
@@ -97,7 +98,7 @@ export default function AcademicPage() {
           <div className="flex flex-col gap-1.5">
             <label className="font-label-md text-label-md text-navy-deep font-semibold" htmlFor="programmeInput">Department / Programme</label>
             <div className="relative flex items-center">
-              <span className="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">menu_book</span>
+              <MaterialSymbol icon="menu_book" className="absolute left-3.5 text-outline text-[20px] pointer-events-none" />
               <input
                 id="programmeInput"
                 type="text"
@@ -145,7 +146,7 @@ export default function AcademicPage() {
               >
                 {GRAD_YEARS.map(y => <option key={y} value={String(y)}>{y}</option>)}
               </select>
-              <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">expand_more</span>
+              <MaterialSymbol icon="expand_more" className="absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" />
             </div>
           </div>
 
@@ -159,7 +160,7 @@ export default function AcademicPage() {
               disabled={loading}
               className="inline-flex items-center justify-center gap-2 h-11 px-6 bg-navy-deep hover:bg-on-primary-fixed text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:shadow-md active:scale-[0.99] transition-all disabled:opacity-60"
             >
-              {loading ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : <>Continue <span className="material-symbols-outlined text-[18px]">arrow_forward</span></>}
+              {loading ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : <>Continue <MaterialSymbol icon="arrow_forward" className="text-[18px]" /></>}
             </button>
           </div>
         </form>

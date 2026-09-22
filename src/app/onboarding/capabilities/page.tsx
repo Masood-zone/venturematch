@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { OnboardingProgress } from "@/components/shared/OnboardingProgress";
 import { CapabilityChip } from "@/components/shared/CapabilityChip";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 type CapFamily = {
   id: string; name: string;
   capabilities: { id: string; name: string }[];
@@ -21,12 +22,20 @@ export default function CapabilitiesPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
-    fetch("/api/v1/capabilities")
-      .then(r => r.json())
-      .then(d => setFamilies(d ?? []))
-      .catch(() => setError("Failed to load capabilities"))
-      .finally(() => setLoading(false));
+    const loadFamilies = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("/api/v1/capabilities");
+        const data = await response.json();
+        setFamilies(data ?? []);
+      } catch {
+        setError("Failed to load capabilities");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void loadFamilies();
   }, []);
 
   function toggle(capabilityId: string) {
@@ -80,7 +89,7 @@ export default function CapabilitiesPage() {
             </p>
           </div>
           <div className="w-12 h-12 rounded-xl bg-surface-subtle flex items-center justify-center flex-shrink-0">
-            <span className="material-symbols-outlined text-[24px] text-teal-accent">psychology</span>
+            <MaterialSymbol icon="psychology" className="text-[24px] text-teal-accent" />
           </div>
         </div>
 
@@ -110,7 +119,7 @@ export default function CapabilitiesPage() {
 
         {/* Search */}
         <div className="relative mb-space-lg">
-          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">search</span>
+          <MaterialSymbol icon="search" className="absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" />
           <input
             type="text"
             placeholder="Search capabilities…"
@@ -122,14 +131,14 @@ export default function CapabilitiesPage() {
 
         {error && (
           <div className="mb-space-md p-3 rounded-lg bg-error-container flex items-center gap-2">
-            <span className="material-symbols-outlined text-on-error-container text-[18px]">error</span>
+            <MaterialSymbol icon="error" className="text-on-error-container text-[18px]" />
             <p className="font-body-md text-body-md text-on-error-container">{error}</p>
           </div>
         )}
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <span className="material-symbols-outlined text-[32px] text-teal-accent animate-spin">progress_activity</span>
+            <MaterialSymbol icon="progress_activity" className="text-[32px] text-teal-accent animate-spin" />
           </div>
         ) : filtered ? (
           /* Search results */
@@ -201,7 +210,7 @@ export default function CapabilitiesPage() {
         {/* Actions */}
         <div className="flex items-center justify-between pt-space-md border-t border-surface-container-high">
           <button type="button" onClick={() => router.back()} className="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-navy-deep transition-colors">
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span> Back
+            <MaterialSymbol icon="arrow_back" className="text-[18px]" /> Back
           </button>
           <button
             type="button"
@@ -209,7 +218,7 @@ export default function CapabilitiesPage() {
             disabled={saving}
             className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep hover:bg-on-primary-fixed text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:shadow-md active:scale-[0.99] transition-all disabled:opacity-60"
           >
-            {saving ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : <>Continue <span className="material-symbols-outlined text-[18px]">arrow_forward</span></>}
+            {saving ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : <>Continue <MaterialSymbol icon="arrow_forward" className="text-[18px]" /></>}
           </button>
         </div>
       </div>

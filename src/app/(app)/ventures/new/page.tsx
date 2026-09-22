@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export default function NewVenturePage() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -44,7 +45,7 @@ export default function NewVenturePage() {
       <div className="max-w-2xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href="/ventures" className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Start a Venture</h1>
@@ -55,7 +56,7 @@ export default function NewVenturePage() {
         <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl space-y-space-lg">
           {error && (
             <div className="p-3 rounded-lg bg-error-container flex items-center gap-2">
-              <span className="material-symbols-outlined text-on-error-container text-[18px]">error</span>
+              <MaterialSymbol icon="error" className="text-on-error-container text-[18px]" />
               <p className="font-body-md text-body-md text-on-error-container">{error}</p>
             </div>
           )}
@@ -111,8 +112,8 @@ export default function NewVenturePage() {
               disabled={loading || !name.trim()}
               className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all disabled:opacity-60"
             >
-              {loading ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : (
-                <><span className="material-symbols-outlined text-[18px]">rocket_launch</span>Create Venture</>
+              {loading ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : (
+                <><MaterialSymbol icon="rocket_launch" className="text-[18px]" />Create Venture</>
               )}
             </button>
           </div>

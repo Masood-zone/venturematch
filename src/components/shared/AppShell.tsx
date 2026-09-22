@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 interface NavItem {
   label: string;
   icon: string;
@@ -61,7 +62,7 @@ export function AppShell({
           {/* Logo */}
           <div className="px-space-lg pt-space-lg pb-space-md flex items-start gap-space-sm">
             <div className="w-8 h-8 rounded-lg bg-navy-deep flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span className="material-symbols-outlined text-on-primary text-[18px]">rocket_launch</span>
+              <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[18px]" />
             </div>
             <div>
               <div className="font-title-md text-title-md text-navy-deep tracking-tight leading-tight">VentureMatch</div>
@@ -86,7 +87,7 @@ export function AppShell({
                   )}
                 >
                   <div className="flex items-center gap-space-md">
-                    <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+                    <MaterialSymbol icon={item.icon} className="text-[20px]" />
                     <span>{item.label}</span>
                   </div>
                   {item.badge !== undefined && (
@@ -131,7 +132,7 @@ export function AppShell({
           </div>
           <div className="flex items-center gap-space-md">
             <Link href="/notifications" className="relative p-2.5 rounded-xl bg-surface-pure hover:bg-surface-container shadow-sm text-navy-deep transition-all">
-              <span className="material-symbols-outlined text-[22px]">notifications</span>
+              <MaterialSymbol icon="notifications" className="text-[22px]" />
               {unreadNotifications > 0 && (
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-warm ring-2 ring-surface-pure" />
               )}

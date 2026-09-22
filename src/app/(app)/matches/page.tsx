@@ -6,6 +6,7 @@ import { VentureStageBadge } from "@/components/shared/VentureStageBadge";
 import { EmptyState } from "@/components/shared/EmptyState";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "My Matches" };
 
 export default async function MatchesPage() {
@@ -41,7 +42,7 @@ export default async function MatchesPage() {
         <div className="p-space-lg flex-1">
           <div className="flex items-start justify-between mb-3">
             <div className="w-12 h-12 rounded-2xl bg-navy-deep flex items-center justify-center flex-shrink-0">
-              <span className="material-symbols-outlined text-on-primary text-[22px]">rocket_launch</span>
+              <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[22px]" />
             </div>
             <MatchScoreBadge score={rec.overallScore} size="md" />
           </div>
@@ -62,7 +63,7 @@ export default async function MatchesPage() {
         <div className="px-space-lg pb-space-md flex items-center justify-between border-t border-surface-container-high pt-3">
           <span className="font-label-sm text-label-sm text-on-surface-variant">{rec.venture.members.length} team member{rec.venture.members.length !== 1 ? "s" : ""}</span>
           <span className="font-label-md text-label-md text-teal-accent font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
-            View <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            View <MaterialSymbol icon="arrow_forward" className="text-[16px]" />
           </span>
         </div>
       </Link>
@@ -98,7 +99,7 @@ export default async function MatchesPage() {
             {strongMatches.length > 0 && (
               <section className="space-y-space-md">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[20px] text-teal-accent">verified</span>
+                  <MaterialSymbol icon="verified" className="text-[20px] text-teal-accent" />
                   <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold">Strong Matches (85%+)</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md">
@@ -109,7 +110,7 @@ export default async function MatchesPage() {
             {goodMatches.length > 0 && (
               <section className="space-y-space-md">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[20px] text-amber-warm">star</span>
+                  <MaterialSymbol icon="star" className="text-[20px] text-amber-warm" />
                   <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold">Good Matches (70–84%)</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md">
@@ -120,7 +121,7 @@ export default async function MatchesPage() {
             {potentialMatches.length > 0 && (
               <section className="space-y-space-md">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[20px] text-on-surface-variant">explore</span>
+                  <MaterialSymbol icon="explore" className="text-[20px] text-on-surface-variant" />
                   <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold">Potential Matches</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md">

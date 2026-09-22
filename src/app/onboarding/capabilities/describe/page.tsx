@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { OnboardingProgress } from "@/components/shared/OnboardingProgress";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export default function CapabilitiesDescribePage() {
   const router = useRouter();
   return (
@@ -16,11 +17,11 @@ export default function CapabilitiesDescribePage() {
               Add context to your selected skills so ventures can better understand your experience level.
             </p>
           </div>
-          <span className="material-symbols-outlined text-[28px] text-teal-accent">edit_note</span>
+          <MaterialSymbol icon="edit_note" className="text-[28px] text-teal-accent" />
         </div>
 
         <div className="p-space-lg rounded-xl bg-surface-subtle text-center">
-          <span className="material-symbols-outlined text-[40px] text-on-surface-variant mb-3 block">psychology</span>
+          <MaterialSymbol icon="psychology" className="text-[40px] text-on-surface-variant mb-3 block" />
           <p className="font-body-md text-body-md text-on-surface-variant">
             You&apos;ll add capability evidence and descriptions in your full profile after completing onboarding.
           </p>
@@ -28,13 +29,13 @@ export default function CapabilitiesDescribePage() {
 
         <div className="flex items-center justify-between pt-space-lg border-t border-surface-container-high mt-space-lg">
           <button onClick={() => router.back()} className="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-navy-deep">
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span> Back
+            <MaterialSymbol icon="arrow_back" className="text-[18px]" /> Back
           </button>
           <button
             onClick={() => router.push("/onboarding/interests")}
             className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all"
           >
-            Continue <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            Continue <MaterialSymbol icon="arrow_forward" className="text-[18px]" />
           </button>
         </div>
       </div>

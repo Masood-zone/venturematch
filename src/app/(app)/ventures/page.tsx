@@ -1,11 +1,13 @@
 import { getServerSession } from "@/server/permissions";
 import { venturesRepository } from "@/server/repositories/ventures.repository";
 import Link from "next/link";
+import Image from "next/image";
 import { VentureStageBadge } from "@/components/shared/VentureStageBadge";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Avatar } from "@/components/ui/avatar";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "My Ventures" };
 
 export default async function VenturesPage() {
@@ -28,7 +30,7 @@ export default async function VenturesPage() {
             <p className="font-body-md text-body-md text-on-surface-variant mt-1">Ventures you own or collaborate on.</p>
           </div>
           <Link href="/ventures/new" className="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-navy-deep text-on-primary font-label-md text-label-md shadow-sm hover:bg-on-primary-fixed transition-all self-start">
-            <span className="material-symbols-outlined text-[18px]">add</span>
+            <MaterialSymbol icon="add" className="text-[18px]" />
             New Venture
           </Link>
         </div>
@@ -64,7 +66,7 @@ export default async function VenturesPage() {
             description="Start your first venture or explore opportunities to join existing ones."
             action={
               <Link href="/ventures/new" className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all">
-                <span className="material-symbols-outlined text-[18px]">add</span>
+                <MaterialSymbol icon="add" className="text-[18px]" />
                 Start a Venture
               </Link>
             }
@@ -75,7 +77,22 @@ export default async function VenturesPage() {
   );
 }
 
-function VentureCard({ venture, isOwner }: { venture: any; isOwner: boolean }) {
+type VentureCardItem = {
+  id: string;
+  name: string;
+  status: string;
+  stage: string;
+  logoUrl?: string | null;
+  shortPitch?: string | null;
+  primarySector?: { name: string } | null;
+  ownerId?: string;
+  members: Array<{
+    userId: string;
+    user?: { name?: string | null } | null;
+  }>;
+};
+
+function VentureCard({ venture, isOwner }: { venture: VentureCardItem; isOwner: boolean }) {
   const statusColors: Record<string, string> = {
     DRAFT: "bg-surface-container-high text-on-surface-variant",
     ACTIVE: "bg-secondary-container text-on-secondary-container",
@@ -89,9 +106,9 @@ function VentureCard({ venture, isOwner }: { venture: any; isOwner: boolean }) {
         <div className="flex items-start justify-between mb-3">
           <div className="w-12 h-12 rounded-2xl bg-navy-deep flex items-center justify-center">
             {venture.logoUrl ? (
-              <img src={venture.logoUrl} alt="" className="w-full h-full object-cover rounded-2xl" />
+              <Image src={venture.logoUrl} alt="" width={48} height={48} className="object-cover rounded-2xl" unoptimized />
             ) : (
-              <span className="material-symbols-outlined text-on-primary text-[22px]">rocket_launch</span>
+              <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[22px]" />
             )}
           </div>
           <div className="flex flex-col items-end gap-1.5">
@@ -113,7 +130,7 @@ function VentureCard({ venture, isOwner }: { venture: any; isOwner: boolean }) {
         </div>
         <div className="flex items-center gap-2">
           {isOwner && <span className="font-label-sm text-label-sm text-teal-accent font-semibold">Owner</span>}
-          <span className="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors">chevron_right</span>
+          <MaterialSymbol icon="chevron_right" className="text-[18px] text-on-surface-variant group-hover:text-teal-accent transition-colors" />
         </div>
       </div>
     </Link>

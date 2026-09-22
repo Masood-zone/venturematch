@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { formatDate } from "@/lib/utils";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Venture Journey" };
 
 const STAGE_ORDER = ["IDEA", "VALIDATION", "PROTOTYPE", "EARLY_LAUNCH", "OPERATE"];
@@ -33,7 +34,7 @@ export default async function VentureJourneyPage({ params }: { params: Promise<{
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
           <div className="flex items-center gap-3">
             <Link href={`/ventures/${ventureId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-              <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+              <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
             </Link>
             <div>
               <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Venture Journey</h1>
@@ -44,16 +45,16 @@ export default async function VentureJourneyPage({ params }: { params: Promise<{
             href={`/ventures/${ventureId}/contributions`}
             className="inline-flex items-center gap-2 h-10 px-4 rounded-xl border border-outline-variant hover:border-navy-deep text-on-surface font-label-md text-label-md transition-all self-start"
           >
-            <span className="material-symbols-outlined text-[18px] text-teal-accent">construction</span>
+            <MaterialSymbol icon="construction" className="text-[18px] text-teal-accent" />
             Log Contribution
           </Link>
         </div>
 
         {milestones.length === 0 ? (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl text-center">
-            <span className="material-symbols-outlined text-[48px] text-on-surface-variant block mb-3">map</span>
+            <MaterialSymbol icon="map" className="text-[48px] text-on-surface-variant block mb-3" />
             <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold mb-2">No milestones yet</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant">Add milestones to track your venture's progress through each stage.</p>
+            <p className="font-body-md text-body-md text-on-surface-variant">Add milestones to track your venture&apos;s progress through each stage.</p>
           </div>
         ) : (
           STAGE_ORDER.map(stage => {
@@ -64,7 +65,7 @@ export default async function VentureJourneyPage({ params }: { params: Promise<{
               <div key={stage} className={`rounded-2xl shadow-sm p-space-lg ${isCurrentStage ? "bg-surface-pure ring-2 ring-teal-accent/30" : "bg-surface-pure"}`}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isCurrentStage ? "bg-teal-accent text-on-primary" : "bg-surface-container-high text-on-surface-variant"}`}>
-                    <span className="material-symbols-outlined text-[16px]">flag</span>
+                    <MaterialSymbol icon="flag" className="text-[16px]" />
                   </div>
                   <h2 className="font-title-md text-title-md text-navy-deep font-semibold">{stage.replace(/_/g, " ")}</h2>
                   {isCurrentStage && <span className="px-2 py-0.5 rounded-full bg-teal-accent text-on-primary font-label-sm text-label-sm ml-auto">Current Stage</span>}

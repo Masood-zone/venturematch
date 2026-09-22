@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { formatDate } from "@/lib/utils";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 type Task = {
   id: string; title: string; purpose?: string; status: string;
   progressCurrent: number; progressTarget: number; dueAt?: string;
@@ -41,7 +42,7 @@ export default function TrialTasksPage() {
 
   if (loading) return (
     <div className="flex justify-center py-16">
-      <span className="material-symbols-outlined text-[40px] text-teal-accent animate-spin">progress_activity</span>
+      <MaterialSymbol icon="progress_activity" className="text-[40px] text-teal-accent animate-spin" />
     </div>
   );
 
@@ -50,7 +51,7 @@ export default function TrialTasksPage() {
       <div className="max-w-3xl mx-auto space-y-space-xl">
         <div className="flex items-center gap-3">
           <Link href={`/trials/${trialId}`} className="p-2 rounded-xl hover:bg-surface-container transition-colors">
-            <span className="material-symbols-outlined text-[22px] text-on-surface-variant">arrow_back</span>
+            <MaterialSymbol icon="arrow_back" className="text-[22px] text-on-surface-variant" />
           </Link>
           <div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Trial Tasks</h1>
@@ -60,7 +61,7 @@ export default function TrialTasksPage() {
 
         {tasks.length === 0 ? (
           <div className="bg-surface-pure rounded-2xl shadow-sm p-space-xl text-center">
-            <span className="material-symbols-outlined text-[48px] text-on-surface-variant block mb-3">task_alt</span>
+            <MaterialSymbol icon="task_alt" className="text-[48px] text-on-surface-variant block mb-3" />
             <h2 className="font-headline-sm text-headline-sm text-navy-deep font-bold mb-2">No tasks yet</h2>
             <p className="font-body-md text-body-md text-on-surface-variant">The venture owner will add tasks for the trial period.</p>
           </div>
@@ -87,7 +88,7 @@ export default function TrialTasksPage() {
                   )}
                   {task.dueAt && (
                     <div className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[14px] text-on-surface-variant">calendar_today</span>
+                      <MaterialSymbol icon="calendar_today" className="text-[14px] text-on-surface-variant" />
                       <span className="font-label-sm text-label-sm text-on-surface-variant">Due {formatDate(task.dueAt)}</span>
                     </div>
                   )}
@@ -117,7 +118,7 @@ export default function TrialTasksPage() {
                         onClick={() => updateStatus(task.id, "IN_PROGRESS")}
                         className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-navy-deep text-on-primary font-label-sm text-label-sm hover:bg-on-primary-fixed transition-all"
                       >
-                        <span className="material-symbols-outlined text-[14px]">play_arrow</span>
+                        <MaterialSymbol icon="play_arrow" className="text-[14px]" />
                         Start
                       </button>
                     )}
@@ -126,7 +127,7 @@ export default function TrialTasksPage() {
                         onClick={() => updateStatus(task.id, "SUBMITTED")}
                         className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-teal-accent text-on-primary font-label-sm text-label-sm hover:bg-secondary transition-all"
                       >
-                        <span className="material-symbols-outlined text-[14px]">upload</span>
+                        <MaterialSymbol icon="upload" className="text-[14px]" />
                         Submit
                       </button>
                     )}
@@ -140,7 +141,7 @@ export default function TrialTasksPage() {
                     <div className="space-y-1">
                       {task.evidence.map(e => (
                         <div key={e.id} className="flex items-center gap-2 p-2 rounded-lg bg-surface-subtle">
-                          <span className="material-symbols-outlined text-[16px] text-teal-accent">attach_file</span>
+                          <MaterialSymbol icon="attach_file" className="text-[16px] text-teal-accent" />
                           <span className="font-label-sm text-label-sm text-navy-deep">{e.type}</span>
                           {e.textValue && <span className="font-body-md text-body-md text-on-surface-variant truncate">{e.textValue}</span>}
                         </div>

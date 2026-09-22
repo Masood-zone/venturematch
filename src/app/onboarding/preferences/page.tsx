@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { OnboardingProgress } from "@/components/shared/OnboardingProgress";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 const COMMITMENT_OPTIONS = [
   { value: "CASUAL", label: "Casual", desc: "2–5 hrs/week, exploratory", icon: "explore" },
   { value: "SIDE_VENTURE", label: "Side Venture", desc: "5–10 hrs/week, part-time", icon: "weekend" },
@@ -84,12 +85,12 @@ export default function PreferencesPage() {
               Your working style and availability help us find the right venture fit.
             </p>
           </div>
-          <span className="material-symbols-outlined text-[28px] text-teal-accent">tune</span>
+          <MaterialSymbol icon="tune" className="text-[28px] text-teal-accent" />
         </div>
 
         {error && (
           <div className="mb-space-md p-3 rounded-lg bg-error-container flex items-center gap-2">
-            <span className="material-symbols-outlined text-on-error-container text-[18px]">error</span>
+            <MaterialSymbol icon="error" className="text-on-error-container text-[18px]" />
             <p className="font-body-md text-body-md text-on-error-container">{error}</p>
           </div>
         )}
@@ -106,7 +107,7 @@ export default function PreferencesPage() {
                   onClick={() => setCommitment(opt.value)}
                   className={`p-4 rounded-2xl text-left transition-all border-2 ${commitment === opt.value ? "border-navy-deep bg-navy-deep text-on-primary" : "border-transparent bg-surface-subtle hover:border-outline-variant text-on-surface"}`}
                 >
-                  <span className={`material-symbols-outlined text-[22px] mb-2 block ${commitment === opt.value ? "text-teal-accent" : "text-on-surface-variant"}`}>{opt.icon}</span>
+                  <MaterialSymbol icon={opt.icon} className={`text-[22px] mb-2 block ${commitment === opt.value ? "text-teal-accent" : "text-on-surface-variant"}`} />
                   <span className="font-title-md text-title-md font-semibold">{opt.label}</span>
                   <p className="font-body-md text-body-md opacity-70 mt-1">{opt.desc}</p>
                 </button>
@@ -165,14 +166,14 @@ export default function PreferencesPage() {
 
         <div className="flex items-center justify-between pt-space-lg border-t border-surface-container-high mt-space-lg">
           <button onClick={() => router.back()} className="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-navy-deep">
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span> Back
+            <MaterialSymbol icon="arrow_back" className="text-[18px]" /> Back
           </button>
           <button
             onClick={handleSubmit}
             disabled={saving}
             className="inline-flex items-center gap-2 h-11 px-6 bg-navy-deep text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:bg-on-primary-fixed transition-all disabled:opacity-60"
           >
-            {saving ? <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> : <>Continue <span className="material-symbols-outlined text-[18px]">arrow_forward</span></>}
+            {saving ? <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" /> : <>Continue <MaterialSymbol icon="arrow_forward" className="text-[18px]" /></>}
           </button>
         </div>
       </div>

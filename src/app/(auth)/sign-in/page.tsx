@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { AuthShell } from "@/components/shared/AuthShell";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -45,7 +46,7 @@ export default function SignInPage() {
             {/* Header */}
             <div className="text-center mb-space-lg">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-surface-subtle text-navy-deep mb-space-sm shadow-sm">
-                <span className="material-symbols-outlined text-teal-accent text-2xl">rocket_launch</span>
+                <MaterialSymbol icon="rocket_launch" className="text-teal-accent text-2xl" />
               </div>
               <h1 className="font-headline-md text-headline-md text-navy-deep tracking-tight">
                 Welcome Back to VentureMatch
@@ -58,7 +59,7 @@ export default function SignInPage() {
             {/* Error */}
             {error && (
               <div className="mb-space-md p-3 rounded-lg bg-error-container flex items-center gap-2">
-                <span className="material-symbols-outlined text-on-error-container text-[18px]">error</span>
+                <MaterialSymbol icon="error" className="text-on-error-container text-[18px]" />
                 <p className="font-body-md text-body-md text-on-error-container">{error}</p>
               </div>
             )}
@@ -71,7 +72,7 @@ export default function SignInPage() {
                   Institutional or Account Email
                 </label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none select-none">mail</span>
+                  <MaterialSymbol icon="mail" className="absolute left-3.5 text-outline text-[20px] pointer-events-none select-none" />
                   <input
                     id="email"
                     type="email"
@@ -90,7 +91,7 @@ export default function SignInPage() {
                   Password
                 </label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none select-none">lock</span>
+                  <MaterialSymbol icon="lock" className="absolute left-3.5 text-outline text-[20px] pointer-events-none select-none" />
                   <input
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -106,9 +107,7 @@ export default function SignInPage() {
                     onClick={() => setShowPassword(p => !p)}
                     className="absolute right-2.5 p-1.5 rounded-lg text-outline hover:text-navy-deep hover:bg-surface-subtle transition-colors flex items-center justify-center"
                   >
-                    <span className="material-symbols-outlined text-[20px]">
-                      {showPassword ? "visibility_off" : "visibility"}
-                    </span>
+                    <MaterialSymbol icon={showPassword ? "visibility_off" : "visibility"} className="text-[20px]" />
                   </button>
                 </div>
               </div>
@@ -139,11 +138,11 @@ export default function SignInPage() {
                 className="w-full h-[46px] mt-1 bg-navy-deep hover:bg-on-primary-fixed text-on-primary font-label-md text-label-md rounded-lg shadow-sm hover:shadow-md active:scale-[0.99] transition-all flex items-center justify-center gap-2 font-semibold disabled:opacity-60"
               >
                 {loading ? (
-                  <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
+                  <MaterialSymbol icon="progress_activity" className="text-[18px] animate-spin" />
                 ) : (
                   <>
                     <span>Sign In</span>
-                    <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    <MaterialSymbol icon="arrow_forward" className="text-[18px]" />
                   </>
                 )}
               </button>
@@ -162,7 +161,7 @@ export default function SignInPage() {
               type="button"
               className="w-full h-11 bg-surface-subtle hover:bg-surface-container text-navy-deep font-label-md text-label-md rounded-lg shadow-sm hover:shadow active:scale-[0.99] transition-all flex items-center justify-center gap-2.5"
             >
-              <span className="material-symbols-outlined text-teal-accent text-[20px]">account_balance</span>
+              <MaterialSymbol icon="account_balance" className="text-teal-accent text-[20px]" />
               <span className="font-medium">Sign in with USTED Student Portal</span>
             </button>
 

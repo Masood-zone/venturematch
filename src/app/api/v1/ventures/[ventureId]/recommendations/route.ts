@@ -15,7 +15,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ venture
 
 export async function POST(_req: Request, { params }: { params: Promise<{ ventureId: string }> }) {
   try {
-    const user = await requireSessionUser();
+    await requireSessionUser();
     const { ventureId } = await params;
     const result = await matchingService.runMatchingForVenture(ventureId);
     if (!result.success) return Response.json({ error: result.error }, { status: 400 });

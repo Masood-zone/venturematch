@@ -6,6 +6,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { EmptyState } from "@/components/shared/EmptyState";
 import type { Metadata } from "next";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export const metadata: Metadata = { title: "Discover Ventures" };
 
 const STAGES = ["IDEA", "VALIDATION", "PROTOTYPE", "EARLY_LAUNCH", "OPERATE"];
@@ -42,7 +43,7 @@ export default async function DiscoverVenturesPage({
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Link href="/discover" className="font-label-md text-label-md text-on-surface-variant hover:text-navy-deep flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px]">arrow_back</span> Discover
+                <MaterialSymbol icon="arrow_back" className="text-[16px]" /> Discover
               </Link>
             </div>
             <h1 className="font-headline-lg text-headline-lg text-navy-deep tracking-tight">Discover Ventures</h1>
@@ -96,7 +97,7 @@ export default async function DiscoverVenturesPage({
                   <div className="p-space-lg flex-1">
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-12 h-12 rounded-2xl bg-navy-deep flex items-center justify-center flex-shrink-0">
-                        <span className="material-symbols-outlined text-on-primary text-[22px]">rocket_launch</span>
+                        <MaterialSymbol icon="rocket_launch" className="text-on-primary text-[22px]" />
                       </div>
                       <VentureStageBadge stage={v.stage} />
                     </div>
@@ -125,7 +126,7 @@ export default async function DiscoverVenturesPage({
                       ))}
                     </div>
                     <span className="font-label-sm text-label-sm text-teal-accent font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
-                      View <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                      View <MaterialSymbol icon="arrow_forward" className="text-[14px]" />
                     </span>
                   </div>
                 </Link>

@@ -1,6 +1,5 @@
 import { profileService } from "@/server/services/profile.service";
-import { DiscoverPeopleSchema } from "@/server/validators/profile.validators";
-import { requireSessionUser, parseQuery, jsonResponse, apiError } from "@/lib/api-helpers";
+import { requireSessionUser, jsonResponse, apiError } from "@/lib/api-helpers";
 import { z } from "zod";
 
 const QuerySchema = z.object({

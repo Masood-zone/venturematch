@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { OnboardingProgress } from "@/components/shared/OnboardingProgress";
 
+import { MaterialSymbol } from "@/components/ui/material-symbol";
 export default function OnboardingCompletePage() {
   return (
     <div className="flex flex-col w-full max-w-2xl mx-auto py-space-md">
@@ -12,7 +13,7 @@ export default function OnboardingCompletePage() {
         <div className="relative inline-flex items-center justify-center mb-space-lg">
           <div className="absolute inset-0 rounded-full bg-secondary-container/30 blur-xl" />
           <div className="relative w-24 h-24 rounded-full bg-secondary-container flex items-center justify-center shadow-lg">
-            <span className="material-symbols-outlined text-[48px] text-on-secondary-container" style={{fontVariationSettings:"'FILL' 1"}}>celebration</span>
+            <MaterialSymbol icon="celebration" className="text-[48px] text-on-secondary-container" style={{fontVariationSettings:"'FILL' 1"}} />
           </div>
         </div>
 
@@ -36,13 +37,13 @@ export default function OnboardingCompletePage() {
               className="flex flex-col gap-3 p-space-md rounded-2xl bg-surface-subtle hover:bg-surface-container-low transition-all hover:-translate-y-0.5 group"
             >
               <div className="w-10 h-10 rounded-xl bg-surface-pure flex items-center justify-center shadow-sm">
-                <span className={`material-symbols-outlined text-[22px] ${item.color}`}>{item.icon}</span>
+                <MaterialSymbol icon={item.icon} className={`text-[22px] ${item.color}`} />
               </div>
               <div>
                 <span className="font-title-md text-title-md text-navy-deep font-semibold group-hover:text-teal-accent transition-colors">{item.title}</span>
                 <p className="font-body-md text-body-md text-on-surface-variant mt-1">{item.desc}</p>
               </div>
-              <span className="material-symbols-outlined text-[18px] text-teal-accent mt-auto">arrow_forward</span>
+              <MaterialSymbol icon="arrow_forward" className="text-[18px] text-teal-accent mt-auto" />
             </Link>
           ))}
         </div>
@@ -52,7 +53,7 @@ export default function OnboardingCompletePage() {
           href="/dashboard"
           className="inline-flex items-center justify-center gap-2 h-12 px-8 bg-navy-deep hover:bg-on-primary-fixed text-on-primary font-label-md text-label-md rounded-xl shadow-md hover:shadow-lg active:scale-[0.99] transition-all text-[15px]"
         >
-          <span className="material-symbols-outlined text-[20px]">home</span>
+          <MaterialSymbol icon="home" className="text-[20px]" />
           Go to Dashboard
         </Link>
 
