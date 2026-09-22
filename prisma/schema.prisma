@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
 }
 
 // ── Enums ──────────────────────────────────────────────────────────────────
@@ -218,9 +218,9 @@ model account {
   providerId            String
   userId                String
   user                  user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?   @db.Text
-  refreshToken          String?   @db.Text
-  idToken               String?   @db.Text
+  accessToken           String?   
+  refreshToken          String?   
+  idToken               String?   
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
   scope                 String?
@@ -248,7 +248,7 @@ model StudentProfile {
   id                     String    @id @default(cuid())
   userId                 String    @unique
   user                   user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bio                    String?   @db.Text
+  bio                    String?   
   level                  String?
   expectedGraduationYear Int?
   discoverability        Boolean   @default(true)
@@ -310,7 +310,7 @@ model Capability {
   family      CapabilityFamily @relation(fields: [familyId], references: [id])
   name        String
   slug        String           @unique
-  description String?          @db.Text
+  description String?          
   status      String           @default("ACTIVE")
   sortOrder   Int              @default(0)
 
@@ -344,7 +344,7 @@ model CapabilityEvidence {
   studentCapability    StudentCapability @relation(fields: [studentCapabilityId], references: [id], onDelete: Cascade)
   type                 String
   title                String
-  description          String?           @db.Text
+  description          String?           
   cloudinaryPublicId   String?
   url                  String?
   linkUrl              String?
@@ -360,7 +360,7 @@ model VentureSector {
   id          String   @id @default(cuid())
   name        String
   slug        String   @unique
-  description String?  @db.Text
+  description String?  
   status      String   @default("ACTIVE")
   sortOrder   Int      @default(0)
 
@@ -405,7 +405,7 @@ model StudentAvailability {
   studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
   weeklyHoursBand  String         @default("5-10")
   timezone         String?
-  notes            String?        @db.Text
+  notes            String?        
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
@@ -420,10 +420,10 @@ model Venture {
   owner              user          @relation("VentureOwner", fields: [ownerId], references: [id])
   name               String
   slug               String        @unique
-  shortPitch         String?       @db.Text
-  problem            String?       @db.Text
-  solution           String?       @db.Text
-  targetUsers        String?       @db.Text
+  shortPitch         String?       
+  problem            String?       
+  solution           String?       
+  targetUsers        String?       
   primarySectorId    String?
   primarySector      VentureSector? @relation("PrimaryVentureSector", fields: [primarySectorId], references: [id])
   secondarySectorId  String?
@@ -491,7 +491,7 @@ model VentureDNA {
   ventureId            String
   venture              Venture  @relation(fields: [ventureId], references: [id], onDelete: Cascade)
   version              Int      @default(1)
-  structuredSummaryJson String? @db.Text
+  structuredSummaryJson String? 
   createdAt            DateTime @default(now())
   confirmedAt          DateTime?
 
@@ -550,7 +550,7 @@ model MatchFactorScore {
   rawScore            Float
   weight              Float
   weightedScore       Float
-  explanationDataJson String?             @db.Text
+  explanationDataJson String?             
 
   @@map("match_factor_score")
 }
@@ -567,7 +567,7 @@ model VentureInvitation {
   recommendation   MatchRecommendation? @relation(fields: [recommendationId], references: [id])
   proposedRole     String?
   expectedCommitment CommitmentLevel?
-  message          String?          @db.Text
+  message          String?          
   invitationType   InvitationType   @default(DIRECT_INVITATION)
   status           InvitationStatus @default(PENDING)
   createdAt        DateTime         @default(now())
@@ -615,7 +615,7 @@ model FounderTrial {
   startAt       DateTime?
   reviewAt      DateTime?
   endAt         DateTime?
-  objective     String?     @db.Text
+  objective     String?     
   durationDays  Int         @default(7)
   createdAt     DateTime    @default(now())
 
@@ -644,7 +644,7 @@ model FounderTrialTask {
   trialId         String
   trial           FounderTrial    @relation(fields: [trialId], references: [id], onDelete: Cascade)
   title           String
-  purpose         String?         @db.Text
+  purpose         String?         
   assigneeUserId  String?
   assignee        user?           @relation("TaskAssignee", fields: [assigneeUserId], references: [id])
   dueAt           DateTime?
@@ -665,7 +665,7 @@ model FounderTrialEvidence {
   submittedBy        String
   submitter          user             @relation(fields: [submittedBy], references: [id])
   type               String
-  textValue          String?          @db.Text
+  textValue          String?          
   url                String?
   cloudinaryPublicId String?
   createdAt          DateTime         @default(now())
@@ -684,8 +684,8 @@ model FounderTrialReview {
   contributionScore   Int
   commitmentScore     Int
   goalAlignmentScore  Int
-  workedWellText      String?      @db.Text
-  concernsText        String?      @db.Text
+  workedWellText      String?      
+  concernsText        String?      
   decision            TrialDecision
   submittedAt         DateTime     @default(now())
 
@@ -703,7 +703,7 @@ model TeamCharter {
   meetingFrequency    String?
   communicationMethod String?
   decisionMethod      String?
-  expectationsText    String?       @db.Text
+  expectationsText    String?       
   status              CharterStatus @default(DRAFT)
   createdAt           DateTime      @default(now())
 
@@ -720,7 +720,7 @@ model TeamCharterMember {
   userId                String
   user                  user        @relation(fields: [userId], references: [id])
   roleTitle             String?
-  responsibilities      String?     @db.Text
+  responsibilities      String?     
   weeklyCommitmentHours Int?
   confirmedAt           DateTime?
 
@@ -746,8 +746,8 @@ model VentureMilestone {
   venture         Venture         @relation(fields: [ventureId], references: [id], onDelete: Cascade)
   stage           VentureStage
   title           String
-  objective       String?         @db.Text
-  expectedOutcome String?         @db.Text
+  objective       String?         
+  expectedOutcome String?         
   status          MilestoneStatus @default(PLANNED)
   dueAt           DateTime?
   progressCurrent Int             @default(0)
@@ -770,7 +770,7 @@ model VentureContribution {
   milestone   VentureMilestone? @relation(fields: [milestoneId], references: [id])
   category    String
   title       String
-  description String?          @db.Text
+  description String?          
   evidenceUrl String?
   publicId    String?
   createdAt   DateTime         @default(now())
@@ -831,7 +831,7 @@ model Message {
   senderUserId   String?
   sender         user?        @relation(fields: [senderUserId], references: [id])
   type           MessageType  @default(TEXT)
-  body           String       @db.Text
+  body           String       
   createdAt      DateTime     @default(now())
   editedAt       DateTime?
 
@@ -859,7 +859,7 @@ model Notification {
   user       user     @relation(fields: [userId], references: [id], onDelete: Cascade)
   type       String
   title      String
-  body       String   @db.Text
+  body       String   
   entityType String?
   entityId   String?
   readAt     DateTime?
@@ -877,7 +877,7 @@ model SupportTicket {
   user              user                @relation(fields: [userId], references: [id])
   category          String
   subject           String
-  description       String              @db.Text
+  description       String              
   relatedEntityType String?
   relatedEntityId   String?
   priority          String              @default("MEDIUM")
@@ -896,7 +896,7 @@ model Report {
   entityType     String
   entityId       String
   reason         String
-  details        String?      @db.Text
+  details        String?      
   priority       String       @default("MEDIUM")
   status         ReportStatus @default(PENDING)
   createdAt      DateTime     @default(now())
@@ -914,7 +914,7 @@ model ModerationAction {
   adminUserId String
   admin       user     @relation(fields: [adminUserId], references: [id])
   action      String
-  reason      String?  @db.Text
+  reason      String?  
   createdAt   DateTime @default(now())
 
   @@map("moderation_action")
@@ -926,7 +926,7 @@ model AdminNote {
   entityId   String
   adminUserId String
   admin      user     @relation(fields: [adminUserId], references: [id])
-  text       String   @db.Text
+  text       String   
   createdAt  DateTime @default(now())
 
   @@index([entityType, entityId])
@@ -940,9 +940,9 @@ model AuditLog {
   action       String
   entityType   String
   entityId     String?
-  beforeJson   String?  @db.Text
-  afterJson    String?  @db.Text
-  metadataJson String?  @db.Text
+  beforeJson   String?  
+  afterJson    String?  
+  metadataJson String?  
   createdAt    DateTime @default(now())
 
   @@index([entityType, entityId, createdAt])
@@ -952,7 +952,7 @@ model AuditLog {
 model SystemSetting {
   id        String   @id @default(cuid())
   key       String   @unique
-  value     String   @db.Text
+  value     String   
   updatedAt DateTime @updatedAt
   updatedBy String?
 
