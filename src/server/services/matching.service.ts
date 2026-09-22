@@ -29,7 +29,7 @@ export const matchingService = {
       })),
       coveredCapabilityIds: venture.members
         .filter(m => m.status === "ACTIVE")
-        .map(m => m.userId),
+        .flatMap(m => m.user.studentProfile?.capabilities.map(c => c.capabilityId) ?? []),
       primarySectorId: venture.primarySectorId ?? "",
       expectedCommitment: venture.expectedCommitment,
       ambition: venture.ambition ?? "side_venture",
