@@ -1,28 +1,30 @@
 import { z } from "zod";
 
+const IdSchema = z.string().regex(new RegExp("^[a-z0-9]{20,32}$", "i"), "Invalid id");
+
 export const StartTrialSchema = z.object({
-  ventureId: z.string().cuid(),
+  ventureId: IdSchema,
   objective: z.string().max(1000).optional(),
   durationDays: z.number().int().min(3).max(30).default(7),
-  participantUserIds: z.array(z.string().cuid()).min(1, "At least one participant required"),
+  participantUserIds: z.array(IdSchema).min(1, "At least one participant required"),
 });
 
 export const AddTrialTaskSchema = z.object({
-  trialId: z.string().cuid(),
+  trialId: IdSchema,
   title: z.string().min(2).max(200),
   purpose: z.string().max(1000).optional(),
-  assigneeUserId: z.string().cuid().optional(),
+  assigneeUserId: IdSchema.optional(),
   dueAt: z.string().datetime().optional(),
 });
 
 export const UpdateTaskStatusSchema = z.object({
-  taskId: z.string().cuid(),
+  taskId: IdSchema,
   status: z.enum(["PENDING", "IN_PROGRESS", "SUBMITTED", "COMPLETED"]),
   progress: z.number().int().min(0).max(100).optional(),
 });
 
 export const SubmitEvidenceSchema = z.object({
-  taskId: z.string().cuid(),
+  taskId: IdSchema,
   type: z.enum(["TEXT", "FILE", "LINK"]),
   textValue: z.string().max(5000).optional(),
   url: z.string().url().optional(),
@@ -30,7 +32,7 @@ export const SubmitEvidenceSchema = z.object({
 });
 
 export const SubmitTrialReviewSchema = z.object({
-  trialId: z.string().cuid(),
+  trialId: IdSchema,
   communicationScore: z.number().int().min(1).max(5),
   reliabilityScore: z.number().int().min(1).max(5),
   contributionScore: z.number().int().min(1).max(5),

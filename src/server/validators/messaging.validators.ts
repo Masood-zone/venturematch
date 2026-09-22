@@ -1,11 +1,13 @@
 import { z } from "zod";
 
+const IdSchema = z.string().regex(new RegExp("^[a-z0-9]{20,32}$", "i"), "Invalid id");
+
 export const StartConversationSchema = z.object({
-  otherUserId: z.string().cuid(),
+  otherUserId: IdSchema,
 });
 
 export const SendMessageSchema = z.object({
-  conversationId: z.string().cuid(),
+  conversationId: IdSchema,
   body: z.string().max(5000),
   attachments: z
     .array(
@@ -21,7 +23,7 @@ export const SendMessageSchema = z.object({
 });
 
 export const GetMessagesSchema = z.object({
-  conversationId: z.string().cuid(),
+  conversationId: IdSchema,
   limit: z.number().int().min(1).max(100).default(50),
   before: z.string().datetime().optional(),
 });

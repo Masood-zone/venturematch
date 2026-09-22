@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const IdSchema = z.string().min(1, "Invalid id").max(191, "Invalid id");
+
 export const AcademicStepSchema = z.object({
   faculty: z.string().min(1).max(100).optional(),
   department: z.string().min(1).max(100).optional(),
@@ -9,7 +11,7 @@ export const AcademicStepSchema = z.object({
 });
 
 export const CapabilityItemSchema = z.object({
-  capabilityId: z.string().cuid(),
+  capabilityId: IdSchema,
   proficiency: z.enum(["BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT"]),
 });
 
@@ -18,7 +20,7 @@ export const CapabilitiesStepSchema = z.object({
 });
 
 export const InterestsStepSchema = z.object({
-  sectorIds: z.array(z.string().cuid()).min(1, "Select at least one sector").max(10),
+  sectorIds: z.array(IdSchema).min(1, "Select at least one sector").max(10),
 });
 
 export const PreferencesStepSchema = z.object({
@@ -39,7 +41,7 @@ export const UpdateProfileSchema = z.object({
 });
 
 export const AddCapabilityEvidenceSchema = z.object({
-  studentCapabilityId: z.string().cuid(),
+  studentCapabilityId: IdSchema,
   type: z.enum(["FILE", "LINK", "TEXT"]),
   title: z.string().min(1).max(200),
   description: z.string().max(1000).optional(),
@@ -49,8 +51,8 @@ export const AddCapabilityEvidenceSchema = z.object({
 });
 
 export const DiscoverPeopleSchema = z.object({
-  capabilityIds: z.array(z.string().cuid()).optional(),
-  sectorIds: z.array(z.string().cuid()).optional(),
+  capabilityIds: z.array(IdSchema).optional(),
+  sectorIds: z.array(IdSchema).optional(),
   page: z.number().int().min(1).default(1),
   pageSize: z.number().int().min(1).max(50).default(20),
 });
