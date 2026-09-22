@@ -1,21 +1,23 @@
 import { z } from "zod";
 
+const IdSchema = z.string().regex(new RegExp("^[a-z0-9]{20,32}$", "i"), "Invalid id");
+
 export const SendInvitationSchema = z.object({
-  ventureId: z.string().cuid(),
-  recipientUserId: z.string().cuid(),
+  ventureId: IdSchema,
+  recipientUserId: IdSchema,
   proposedRole: z.string().max(100).optional(),
   expectedCommitment: z.enum(["CASUAL", "SIDE_VENTURE", "SERIOUS", "FULL_TIME"]).optional(),
   message: z.string().max(1000).optional(),
-  recommendationId: z.string().cuid().optional(),
+  recommendationId: IdSchema.optional(),
 });
 
 export const RespondInvitationSchema = z.object({
-  invitationId: z.string().cuid(),
+  invitationId: IdSchema,
   response: z.enum(["INTERESTED", "DECLINED"]),
 });
 
 export const ProposeTrialSchema = z.object({
-  invitationId: z.string().cuid(),
+  invitationId: IdSchema,
 });
 
 export const CreateMatchingConfigSchema = z.object({
@@ -35,7 +37,7 @@ export const CreateMatchingConfigSchema = z.object({
 );
 
 export const RunMatchingSchema = z.object({
-  ventureId: z.string().cuid(),
+  ventureId: IdSchema,
 });
 
 export type SendInvitationInput = z.infer<typeof SendInvitationSchema>;
